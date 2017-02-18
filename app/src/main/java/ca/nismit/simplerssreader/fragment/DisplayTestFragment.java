@@ -8,11 +8,11 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import ca.nismit.simplerssreader.MainActivity;
+
 import ca.nismit.simplerssreader.R;
 
 public class DisplayTestFragment extends Fragment {
-    static final String TAG = MainActivity.class.getSimpleName();
+    static final String TAG = DisplayTestFragment.class.getSimpleName();
 
     public DisplayTestFragment() {
     }

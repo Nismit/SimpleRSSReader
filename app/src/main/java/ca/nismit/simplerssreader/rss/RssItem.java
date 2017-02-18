@@ -1,6 +1,6 @@
-package ca.nismit.simplerssreader.model;
+package ca.nismit.simplerssreader.rss;
 
-public class RssFeedModel {
+public class RssItem {
     private String title;
     private String link;
     private String summary;
@@ -9,7 +9,7 @@ public class RssFeedModel {
     private String date;
     private long published;
 
-    public RssFeedModel(String title, String summary, String content, String link, String thumbnail, String date, long published) {
+    public RssItem(String title, String summary, String content, String link, String thumbnail, String date, long published) {
         this.title = title;
         this.summary = summary;
         this.content = content;
