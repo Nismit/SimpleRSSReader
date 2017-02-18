@@ -12,6 +12,9 @@ import android.widget.TextView;
 
 import com.squareup.picasso.Picasso;
 
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 import ca.nismit.simplerssreader.R;
@@ -21,7 +24,7 @@ public class MainAdapter extends BaseAdapter {
     static final String TAG = MainAdapter.class.getSimpleName();
     Context context;
     LayoutInflater layoutInflater = null;
-    List<RssItem> items;
+    List<RssItem> items = new ArrayList<>();
 
 
     public MainAdapter(Context context) {
@@ -31,7 +34,7 @@ public class MainAdapter extends BaseAdapter {
     }
 
     public void setMainAdapater(List<RssItem> items) {
-        this.items = items;
+        this.items.addAll(items);
     }
 
     @Override
@@ -46,6 +49,22 @@ public class MainAdapter extends BaseAdapter {
 
     public int getCount() {
         return items.size();
+    }
+
+    public void sortList() {
+        Collections.sort(this.items, new Comparator<RssItem>() {
+            @Override
+            public int compare(RssItem o1, RssItem o2) {
+                return (int) (o2.getPublished() - o1.getPublished());
+            }
+        });
+    }
+
+    @Override
+    public void notifyDataSetChanged() {
+        Log.d(TAG, "Data Changed");
+        sortList();
+        super.notifyDataSetChanged();
     }
 
     public String trimTitle(int position) {

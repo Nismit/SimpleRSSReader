@@ -3,6 +3,7 @@ package ca.nismit.simplerssreader.fragment;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -21,9 +22,11 @@ import ca.nismit.simplerssreader.rss.RssItem;
 public class MainFragment extends Fragment {
     static final String TAG = MainFragment.class.getSimpleName();
 
+    private SwipeRefreshLayout mSwipeRefreshLayout;
     BackgroundGetFeed backgroundGetFeed = new BackgroundGetFeed();
     MainAdapter mainAdapter;
     ListView mListView;
+    boolean flag = false;
 
     public MainFragment() {
     }
@@ -38,6 +41,8 @@ public class MainFragment extends Fragment {
         Log.d(TAG, "Started onCreateView");
         View v = inflater.inflate(R.layout.fragment_main, container, false);
         mListView = (ListView) v.findViewById(R.id.f_listview);
+        mSwipeRefreshLayout = (SwipeRefreshLayout) v.findViewById(R.id.refresh);
+        mSwipeRefreshLayout.setOnRefreshListener(mOnRefreshListener);
         init();
         return v;
     }
@@ -49,6 +54,14 @@ public class MainFragment extends Fragment {
         kicks();
     }
 
+    private SwipeRefreshLayout.OnRefreshListener mOnRefreshListener = new SwipeRefreshLayout.OnRefreshListener() {
+        @Override
+        public void onRefresh() {
+            kicks2();
+            mSwipeRefreshLayout.setRefreshing(false);
+        }
+    };
+
     void init() {
         Log.d(TAG, "Started init()");
         mainAdapter = new MainAdapter(getContext());
@@ -59,6 +72,16 @@ public class MainFragment extends Fragment {
         backgroundGetFeed.taskStart("http://android-developers.blogspot.com/atom.xml");
         //backgroundGetFeed.taskStart("https://www.smashingmagazine.com/feed/");
         //backgroundGetFeed.taskStart("http://gihyo.jp/design/feed/atom");
+    }
+
+    private void kicks2() {
+        backgroundGetFeed.taskStart("https://www.smashingmagazine.com/feed/");
+        //backgroundGetFeed.taskStart("http://gihyo.jp/design/feed/atom");
+    }
+
+    private void test(List<RssItem> items) {
+        mainAdapter.setMainAdapater(items);
+        mainAdapter.notifyDataSetChanged();
     }
 
     private void setResult(List<RssItem> items) {
@@ -78,7 +101,12 @@ public class MainFragment extends Fragment {
                     break;
                 case FINISH:
                     Log.d(TAG, "GET DATA");
-                    setResult(backgroundGetFeed.getItems());
+                    if (!flag) {
+                        setResult(backgroundGetFeed.getItems());
+                        flag = true;
+                    } else {
+                        test(backgroundGetFeed.getItems());
+                    }
                     break;
             }
         }
