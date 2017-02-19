@@ -38,8 +38,8 @@ public class MainFragment extends Fragment {
     // Calls at once
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
-        Log.d(TAG, "Called onCreate");
         super.onCreate(savedInstanceState);
+        Log.d(TAG, "Called onCreate");
         init();
         kicks();
     }

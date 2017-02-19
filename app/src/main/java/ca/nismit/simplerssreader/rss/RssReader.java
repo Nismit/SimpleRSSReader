@@ -43,9 +43,9 @@ public class RssReader {
                 }
             }
         }catch (MalformedURLException e) {
-            Log.e(TAG, "Feed URL is malformed", e);
+            Log.e(TAG, "FEED URL IS MALFORMED: ", e);
         }catch (IOException e) {
-            Log.e(TAG, "Error reading from network: " + e.toString());
+            Log.e(TAG, "ERROR FROM NETWORK: " + e.getMessage());
         }catch (XmlPullParserException e) {
             e.printStackTrace();
         }catch (ParseException e) {
@@ -67,8 +67,7 @@ public class RssReader {
         if (status == HttpURLConnection.HTTP_OK) {
             return conn.getInputStream();
         }else {
-            throw new IOException("CONNECTION ERROR, STATUS CODE: " + status);
+            throw new IOException("CONNECTION ERROR, RESPONSE CODE: " + status);
         }
-
     }
 }
