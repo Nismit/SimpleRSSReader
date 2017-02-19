@@ -29,17 +29,16 @@ public class AddFragment extends Fragment {
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        Log.d(TAG, "Started onCreateView");
-        View v = inflater.inflate(R.layout.fragment_add_rss, container, false);
-        urlText = (EditText) v.findViewById(R.id.urlText);
-        addFeedButton = (Button) v.findViewById(R.id.addFeedButton);
-        fetchButton = (Button) v.findViewById(R.id.fetchButton);
-        return v;
+        Log.d(TAG, "Called onCreateView");
+        return inflater.inflate(R.layout.fragment_add_rss, container, false);
     }
 
     @Override
     public void onStart() {
-        Log.d(TAG, "Started onStart");
         super.onStart();
+        Log.d(TAG, "Called onStart");
+        urlText = (EditText) getActivity().findViewById(R.id.urlText);
+        addFeedButton = (Button) getActivity().findViewById(R.id.addFeedButton);
+        fetchButton = (Button) getActivity().findViewById(R.id.fetchButton);
     }
 }

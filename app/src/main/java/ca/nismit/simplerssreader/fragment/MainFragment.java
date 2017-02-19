@@ -35,23 +35,34 @@ public class MainFragment extends Fragment {
         return new MainFragment();
     }
 
+    // Calls at once
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        Log.d(TAG, "Called onCreate");
+        super.onCreate(savedInstanceState);
+        init();
+        kicks();
+    }
+
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        Log.d(TAG, "Started onCreateView");
+        Log.d(TAG, "Called onCreateView");
         View v = inflater.inflate(R.layout.fragment_main, container, false);
         mListView = (ListView) v.findViewById(R.id.f_listview);
         mSwipeRefreshLayout = (SwipeRefreshLayout) v.findViewById(R.id.refresh);
         mSwipeRefreshLayout.setOnRefreshListener(mOnRefreshListener);
-        init();
         return v;
     }
 
     @Override
     public void onStart() {
-        Log.d(TAG, "Started onStart");
         super.onStart();
-        kicks();
+        Log.d(TAG, "Called onStart");
+
+        if (flag) {
+            setResult(backgroundGetFeed.getItems());
+        }
     }
 
     private SwipeRefreshLayout.OnRefreshListener mOnRefreshListener = new SwipeRefreshLayout.OnRefreshListener() {
@@ -63,7 +74,7 @@ public class MainFragment extends Fragment {
     };
 
     void init() {
-        Log.d(TAG, "Started init()");
+        Log.d(TAG, "Called init()");
         mainAdapter = new MainAdapter(getContext());
     }
 
@@ -100,7 +111,6 @@ public class MainFragment extends Fragment {
                 case START:
                     break;
                 case FINISH:
-                    Log.d(TAG, "GET DATA");
                     if (!flag) {
                         setResult(backgroundGetFeed.getItems());
                         flag = true;
