@@ -7,26 +7,34 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-
+import android.widget.Button;
+import android.widget.EditText;
 
 import ca.nismit.simplerssreader.R;
 
-public class DisplayTestFragment extends Fragment {
-    static final String TAG = DisplayTestFragment.class.getSimpleName();
+public class AddFragment extends Fragment {
+    static final String TAG = AddFragment.class.getSimpleName();
 
-    public DisplayTestFragment() {
+    EditText urlText;
+    Button addFeedButton;
+    Button fetchButton;
+
+    public AddFragment() {
     }
 
-    public static DisplayTestFragment newInstance() {
-        return new DisplayTestFragment();
+    public static AddFragment newInstance() {
+        return new AddFragment();
     }
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         Log.d(TAG, "Started onCreateView");
-        //return super.onCreateView(inflater, container, savedInstanceState);
-        return inflater.inflate(R.layout.fragment_display_test, container, false);
+        View v = inflater.inflate(R.layout.fragment_add_rss, container, false);
+        urlText = (EditText) v.findViewById(R.id.urlText);
+        addFeedButton = (Button) v.findViewById(R.id.addFeedButton);
+        fetchButton = (Button) v.findViewById(R.id.fetchButton);
+        return v;
     }
 
     @Override

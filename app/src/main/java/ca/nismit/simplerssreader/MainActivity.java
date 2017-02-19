@@ -6,7 +6,7 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 
-import ca.nismit.simplerssreader.fragment.DisplayTestFragment;
+import ca.nismit.simplerssreader.fragment.AddFragment;
 import ca.nismit.simplerssreader.fragment.MainFragment;
 
 public class MainActivity extends AppCompatActivity {
@@ -35,7 +35,7 @@ public class MainActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
         if (id == R.id.add_rss_feed) {
-            replaceFragment(DisplayTestFragment.newInstance());
+            replaceFragment(AddFragment.newInstance());
             return true;
         }
         return super.onOptionsItemSelected(item);
