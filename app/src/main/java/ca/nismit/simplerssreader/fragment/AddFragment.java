@@ -12,6 +12,7 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import ca.nismit.simplerssreader.R;
+import ca.nismit.simplerssreader.orma.DatabaseHandler;
 
 import static ca.nismit.simplerssreader.util.Utils.getByteArrayUrlData;
 
@@ -73,10 +74,11 @@ public class AddFragment extends Fragment {
     private void addFeedUrl() {
         Log.d(TAG, "Call addFeedUrl");
         String url = urlText.getText().toString();
-        Log.d(TAG, "getText:" +url);
-        byte[] byteArray = getByteArrayUrlData(url);
-        if(byteArray != null) {
-            // insert data to database
+        if (url.startsWith("http://") || url.startsWith("https://")) {
+            // Insert data to database
+            //DatabaseHandler databaseHandler = new DatabaseHandler();
+            //databaseHandler
+            Toast.makeText(getActivity(), "INSERT DATA TO DATABASE, BUT WORKING IN PROGRESS:(", Toast.LENGTH_SHORT).show();
         } else {
             Toast.makeText(getActivity(), "URL ERROR. Please make sure correct url", Toast.LENGTH_SHORT).show();
         }

@@ -74,7 +74,11 @@ public class MainFragment extends Fragment {
     private SwipeRefreshLayout.OnRefreshListener mOnRefreshListener = new SwipeRefreshLayout.OnRefreshListener() {
         @Override
         public void onRefresh() {
-            kicks2();
+            if (Utils.networkCheck(getContext())) {
+                kicks2();
+            } else {
+                Toast.makeText(getActivity(), "Internet is not available", Toast.LENGTH_SHORT).show();
+            }
             mSwipeRefreshLayout.setRefreshing(false);
         }
     };
@@ -86,10 +90,11 @@ public class MainFragment extends Fragment {
 
     private void kicks() {
         backgroundGetFeed.addObserver(observer);
-        //backgroundGetFeed.taskStart("http://android-developers.blogspot.com/atom.xml");
+        backgroundGetFeed.taskStart("http://android-developers.blogspot.com/atom.xml");
         //backgroundGetFeed.taskStart("https://www.smashingmagazine.com/feed/");
         //backgroundGetFeed.taskStart("http://feeds2.feedburner.com/tympanus");
-        backgroundGetFeed.taskStart("http://feeds2.feedburner.com/webdesignerdepot");
+        //https://css-tricks.com/feed/
+        //backgroundGetFeed.taskStart("http://feeds2.feedburner.com/webdesignerdepot");
         //backgroundGetFeed.taskStart("http://gihyo.jp/design/feed/atom");
     }
 

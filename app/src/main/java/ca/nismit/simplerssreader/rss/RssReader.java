@@ -7,8 +7,7 @@ import java.util.List;
 import static ca.nismit.simplerssreader.util.Utils.getByteArrayUrlData;
 
 public class RssReader {
-    // For Debug
-    private static final String TAG = "BackgroundTask";
+    private static final String TAG = RssReader.class.getSimpleName();
 
     private String url;
     private List<RssItem> items;
