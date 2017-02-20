@@ -9,6 +9,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import java.util.List;
 import java.util.Observable;
@@ -18,6 +19,7 @@ import ca.nismit.simplerssreader.R;
 import ca.nismit.simplerssreader.adapter.MainAdapter;
 import ca.nismit.simplerssreader.observer.BackgroundGetFeed;
 import ca.nismit.simplerssreader.rss.RssItem;
+import ca.nismit.simplerssreader.util.Utils;
 
 public class MainFragment extends Fragment {
     static final String TAG = MainFragment.class.getSimpleName();
@@ -41,7 +43,11 @@ public class MainFragment extends Fragment {
         super.onCreate(savedInstanceState);
         Log.d(TAG, "Called onCreate");
         init();
-        kicks();
+        if (Utils.networkCheck(this.getContext())) {
+            kicks();
+        } else {
+            Toast.makeText(getActivity(), "Internet is not available", Toast.LENGTH_SHORT).show();
+        }
     }
 
     @Nullable

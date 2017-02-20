@@ -13,6 +13,8 @@ import android.widget.Toast;
 
 import ca.nismit.simplerssreader.R;
 
+import static ca.nismit.simplerssreader.util.Utils.getByteArrayUrlData;
+
 public class AddFragment extends Fragment {
     static final String TAG = AddFragment.class.getSimpleName();
 
@@ -51,7 +53,12 @@ public class AddFragment extends Fragment {
         addFeedButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(getActivity(), "ADDED FEED URL", Toast.LENGTH_SHORT).show();
+                if(urlText.getText().toString() == null || urlText.getText().toString().equals("")) {
+                    Toast.makeText(getActivity(), "URL field is empty, Can not add URL", Toast.LENGTH_SHORT).show();
+                } else {
+                    addFeedUrl();
+                }
+
             }
         });
 
@@ -61,5 +68,18 @@ public class AddFragment extends Fragment {
                 Toast.makeText(getActivity(), "FETCHED", Toast.LENGTH_SHORT).show();
             }
         });
+    }
+
+    private void addFeedUrl() {
+        Log.d(TAG, "Call addFeedUrl");
+        String url = urlText.getText().toString();
+        Log.d(TAG, "getText:" +url);
+        byte[] byteArray = getByteArrayUrlData(url);
+        if(byteArray != null) {
+            // insert data to database
+        } else {
+            Toast.makeText(getActivity(), "URL ERROR. Please make sure correct url", Toast.LENGTH_SHORT).show();
+        }
+
     }
 }
