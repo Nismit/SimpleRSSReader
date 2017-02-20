@@ -2,14 +2,12 @@ package ca.nismit.simplerssreader.rss;
 
 import android.util.Log;
 
-import org.xmlpull.v1.XmlPullParserException;
-
+import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
-import java.text.ParseException;
 import java.util.List;
 
 public class RssReader {
@@ -27,47 +25,65 @@ public class RssReader {
     }
 
     public List<RssItem> getItems() {
+        byte[] byteArray = getByteArrayUrlData(this.url);
+        //Log.d(TAG, "Byte Array: " + byteArray);
+        String data = new String(byteArray);
         try {
-            InputStream stream = null;
-            URL urlAddress = new URL(this.url);
             XmlParser xmlParser = new XmlParser();
-
-            try {
-                Log.d(TAG, "TRY ACCESS TO:" + urlAddress);
-                stream = getHTTPStream(urlAddress);
-                items = xmlParser.parse(stream);
-                return items;
-            } finally {
-                if(stream != null) {
-                    stream.close();
-                }
-            }
-        }catch (MalformedURLException e) {
-            Log.e(TAG, "FEED URL IS MALFORMED: ", e);
-        }catch (IOException e) {
-            Log.e(TAG, "ERROR FROM NETWORK: " + e.getMessage());
-        }catch (XmlPullParserException e) {
-            e.printStackTrace();
-        }catch (ParseException e) {
+            items = xmlParser.parse(data);
+            return items;
+        } catch (Exception e) {
             e.printStackTrace();
         }
-
         return null;
     }
 
-    private InputStream getHTTPStream(URL url) throws IOException {
-        HttpURLConnection conn = (HttpURLConnection) url.openConnection();
-        conn.setReadTimeout(READ_TIMEOUT_MS);
-        conn.setConnectTimeout(CONNECTION_TIMEOUT_MS);
-        conn.setRequestMethod("GET");
-        conn.setDoInput(true);
-        conn.connect();
-        final int status = conn.getResponseCode();
-        //Log.d(TAG, "CHECK CONNECTION CODE:" + status);
-        if (status == HttpURLConnection.HTTP_OK) {
-            return conn.getInputStream();
-        }else {
-            throw new IOException("CONNECTION ERROR, RESPONSE CODE: " + status);
+    public static byte[] getByteArrayUrlData(String urlAddress) {
+        byte[] line = new byte[1024];
+        byte[] result = null;
+        int size = 0;
+        HttpURLConnection conn = null;
+        InputStream stream = null;
+        ByteArrayOutputStream outputStream = null;
+
+        try {
+            URL url = new URL(urlAddress);
+            conn = (HttpURLConnection) url.openConnection();
+            conn.setReadTimeout(READ_TIMEOUT_MS);
+            conn.setConnectTimeout(CONNECTION_TIMEOUT_MS);
+            conn.setRequestMethod("GET");
+            conn.connect();
+            int status = conn.getResponseCode();
+            if (status == HttpURLConnection.HTTP_OK) {
+                stream = conn.getInputStream();
+                outputStream = new ByteArrayOutputStream();
+                while (true) {
+                    size = stream.read(line);
+                    if (size <= 0) {
+                        break;
+                    }
+
+                    outputStream.write(line, 0, size);
+                }
+                result = outputStream.toByteArray();
+            } else {
+                throw new IOException("CONNECTION ERROR, RESPONSE CODE: " + status);
+            }
+        } catch (MalformedURLException e) {
+            Log.e(TAG, "FEED URL IS MALFORMED: ", e);
+        } catch (IOException e) {
+            Log.e(TAG, "ERROR FROM NETWORK: " + e.getMessage());
+        } catch (Exception e) {
+            Log.e(TAG, "OTHER ERROR: ", e);
+        } finally {
+            try {
+                if (conn != null) { conn.disconnect(); }
+                if (stream != null) { stream.close(); }
+                if (outputStream != null) { outputStream.close(); }
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
         }
+        return result;
     }
 }

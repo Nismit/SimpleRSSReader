@@ -2,8 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:orientation="vertical" android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:padding="10dp">
+    android:layout_height="match_parent">
 
     <EditText
         android:layout_width="match_parent"
@@ -13,7 +12,11 @@
         android:id="@+id/urlText"
         android:hint="http://"
         style="@android:style/Widget.EditText"
-        android:textSize="20sp" />
+        android:textSize="20sp"
+        android:paddingTop="10dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:layout_marginTop="10dp" />
 
     <Button
         android:text="ADD FEED"
@@ -21,7 +24,9 @@
         android:layout_height="wrap_content"
         android:id="@+id/addFeedButton"
         android:textSize="16sp"
-        android:layout_marginTop="10dp" />
+        android:layout_marginTop="10dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp" />
 
     <Button
         android:text="FETCH FEED"
@@ -29,5 +34,7 @@
         android:layout_height="wrap_content"
         android:textSize="16sp"
         android:id="@+id/fetchButton"
-        android:layout_marginTop="10dp" />
+        android:layout_marginTop="10dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp" />
 </LinearLayout>

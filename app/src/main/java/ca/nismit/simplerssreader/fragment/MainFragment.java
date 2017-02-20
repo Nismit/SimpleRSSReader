@@ -80,8 +80,10 @@ public class MainFragment extends Fragment {
 
     private void kicks() {
         backgroundGetFeed.addObserver(observer);
-        backgroundGetFeed.taskStart("http://android-developers.blogspot.com/atom.xml");
+        //backgroundGetFeed.taskStart("http://android-developers.blogspot.com/atom.xml");
         //backgroundGetFeed.taskStart("https://www.smashingmagazine.com/feed/");
+        //backgroundGetFeed.taskStart("http://feeds2.feedburner.com/tympanus");
+        backgroundGetFeed.taskStart("http://feeds2.feedburner.com/webdesignerdepot");
         //backgroundGetFeed.taskStart("http://gihyo.jp/design/feed/atom");
     }
 

@@ -8,7 +8,7 @@ import org.xmlpull.v1.XmlPullParser;
 import org.xmlpull.v1.XmlPullParserException;
 
 import java.io.IOException;
-import java.io.InputStream;
+import java.io.StringReader;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -20,8 +20,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class XmlParser {
-    // For Debug
-    private static final String TAG = "XmlParser";
+    private static final String TAG = XmlParser.class.getSimpleName();
 
     private static final int TAG_TITLE = 1;
     private static final int TAG_SUMMARY = 2;
@@ -30,43 +29,31 @@ public class XmlParser {
     private static final int TAG_THUMBNAIL = 5;
     private static final int TAG_PUBLISHED = 6;
     private static final String ns = null;
+    private static String feedType = null;
+    //private static final String feed[] = {"title", "summary", "content", "thumbnail", "published"};
+    //private static final String rss[] = {"title", "description", "content", "thumbnail", "pubDate"};
 
-    public List parse(InputStream in) throws XmlPullParserException, IOException, ParseException {
+    public List<RssItem> parse(String data) throws XmlPullParserException, IOException, ParseException {
         try {
-            XmlPullParser parser = Xml.newPullParser();
+            final XmlPullParser parser = Xml.newPullParser();
             parser.setFeature(XmlPullParser.FEATURE_PROCESS_NAMESPACES, false);
-            parser.setInput(in, null);
-            parser.nextTag();
-            return reedFeed(parser);
+            parser.setInput(new StringReader(data));
+            return readFeed(parser);
         } finally {
-            in.close();
+
         }
     }
 
-    //
-    // Feed Type Check
-    //
-
-    private String feedTypeChecker(XmlPullParser parser) throws XmlPullParserException, IOException {
-        String feedType = null;
-
-        try {
-            parser.require(XmlPullParser.START_TAG, ns, "feed");
-            feedType = "feed";
-            return feedType;
-        } catch (XmlPullParserException e) {
-            parser.require(XmlPullParser.START_TAG, ns, "rss");
-            feedType = "rss";
-            return feedType;
-        }
+    private void feedType(XmlPullParser parser) throws XmlPullParserException, IOException, ParseException {
+        parser.next();
+        feedType = parser.getName();
+        Log.d(TAG, "Feed Type: "+ feedType);
     }
 
-    private List reedFeed(XmlPullParser parser) throws XmlPullParserException, IOException, ParseException {
+    private List readFeed(XmlPullParser parser) throws XmlPullParserException, IOException, ParseException {
         List items = new ArrayList();
 
-        String feedType = feedTypeChecker(parser);
-        Log.d(TAG, "Feed Type: "+ feedType);
-
+        feedType(parser);
 
         while (parser.next() != XmlPullParser.END_TAG) {
             if (parser.getEventType() != XmlPullParser.START_TAG) {
@@ -75,12 +62,10 @@ public class XmlParser {
 
             String name = parser.getName();
 
-            //Log.d(TAG, "P NAME: "+ name);
-
             if (feedType.equals("feed") && name.equals("entry")) {
                 items.add(readEntry(parser));
             }else if (feedType.equals("rss") && name.equals("channel")) {
-                // Nothing
+                // Nothing to do
             }else if(feedType.equals("rss") && name.equals("item")) {
                 items.add(readItem(parser));
             }else {
@@ -107,8 +92,6 @@ public class XmlParser {
             }
 
             String name = parser.getName();
-
-            //Log.d(TAG, "E NAME: "+ name);
 
             if(name.equals("title")) {
                 title = readTag(parser, "title", TAG_TITLE);
@@ -145,44 +128,6 @@ public class XmlParser {
         return new RssItem(title, summary, content, link, thumbnail, date, published);
     }
 
-    @Nullable
-    private String getImgSrc(String str) {
-        Pattern sImageUrlPattern = Pattern.compile("<\\s*img\\s?[^>]*src\\s*=\\s*([\"'])(.*?)\\1");
-        Matcher m = sImageUrlPattern.matcher(str);
-        if(m.find()){
-            return m.group(2);
-        } else {
-            return null;
-        }
-    }
-
-    @Nullable
-    private Date dateConverter(String str) {
-        String[] patternList = new String[] {"yyyyy-MM-dd'T'HH:mm:ss.SSSZZZZ", "yyyyy-MM-dd'T'HH:mm:ssZZZZ", "EEE, d MMM yyyy HH:mm:ss Z"};
-        Date date = null;
-
-        //2017-02-16T11:59:00.001-08:00
-        //2017-02-16T13:05:00+09:00
-        //Thu, 16 Feb 2017 10:27:43 +0000
-
-        for(String pattern : patternList) {
-            try {
-                DateFormat df = new SimpleDateFormat(pattern);
-                df.setTimeZone(TimeZone.getTimeZone("UTC"));
-                date = df.parse(str);
-                break;
-            } catch (ParseException e) {
-
-            }
-        }
-
-        if(date == null) {
-            return null;
-        } else {
-            return date;
-        }
-    }
-
     private RssItem readItem(XmlPullParser parser) throws XmlPullParserException, IOException, ParseException {
         parser.require(XmlPullParser.START_TAG, ns, "item");
         String title = null;
@@ -199,7 +144,6 @@ public class XmlParser {
             }
 
             String name = parser.getName();
-            //Log.d(TAG, "I NAME: "+ name);
 
             if(name.equals("title")) {
                 title = readTag(parser, "title", TAG_TITLE);
@@ -234,7 +178,6 @@ public class XmlParser {
     }
 
     private String readTag(XmlPullParser parser, String tagName, int tagType) throws XmlPullParserException, IOException {
-
         switch (tagType) {
             case TAG_TITLE:
                 return readBasicTag(parser, tagName);
@@ -283,8 +226,45 @@ public class XmlParser {
                 break;
             }
         }
-
         return link;
+    }
+
+    @Nullable
+    private String getImgSrc(String str) {
+        Pattern sImageUrlPattern = Pattern.compile("<\\s*img\\s?[^>]*src\\s*=\\s*([\"'])(.*?)\\1");
+        Matcher m = sImageUrlPattern.matcher(str);
+        if(m.find()){
+            return m.group(2);
+        } else {
+            return null;
+        }
+    }
+
+    @Nullable
+    private Date dateConverter(String str) {
+        String[] patternList = new String[] {"yyyyy-MM-dd'T'HH:mm:ss.SSSZZZZ", "yyyyy-MM-dd'T'HH:mm:ssZZZZ", "EEE, d MMM yyyy HH:mm:ss Z"};
+        Date date = null;
+
+        //2017-02-16T11:59:00.001-08:00
+        //2017-02-16T13:05:00+09:00
+        //Thu, 16 Feb 2017 10:27:43 +0000
+
+        for(String pattern : patternList) {
+            try {
+                DateFormat df = new SimpleDateFormat(pattern);
+                df.setTimeZone(TimeZone.getTimeZone("UTC"));
+                date = df.parse(str);
+                break;
+            } catch (ParseException e) {
+                // Nothing to do
+            }
+        }
+
+        if(date == null) {
+            return null;
+        } else {
+            return date;
+        }
     }
 
     private void skip(XmlPullParser parser) throws XmlPullParserException, IOException {

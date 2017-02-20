@@ -9,6 +9,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import ca.nismit.simplerssreader.R;
 
@@ -46,5 +47,19 @@ public class AddFragment extends Fragment {
         urlText = (EditText) getActivity().findViewById(R.id.urlText);
         addFeedButton = (Button) getActivity().findViewById(R.id.addFeedButton);
         fetchButton = (Button) getActivity().findViewById(R.id.fetchButton);
+
+        addFeedButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Toast.makeText(getActivity(), "ADDED FEED URL", Toast.LENGTH_SHORT).show();
+            }
+        });
+
+        fetchButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Toast.makeText(getActivity(), "FETCHED", Toast.LENGTH_SHORT).show();
+            }
+        });
     }
 }
