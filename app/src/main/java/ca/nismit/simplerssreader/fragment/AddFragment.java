@@ -1,6 +1,7 @@
 package ca.nismit.simplerssreader.fragment;
 
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.util.Log;
@@ -13,6 +14,8 @@ import android.widget.Toast;
 
 import ca.nismit.simplerssreader.R;
 import ca.nismit.simplerssreader.orma.DatabaseHandler;
+import ca.nismit.simplerssreader.orma.FeedUrlStore;
+import ca.nismit.simplerssreader.orma.OrmaDatabase;
 
 import static ca.nismit.simplerssreader.util.Utils.getByteArrayUrlData;
 
@@ -22,6 +25,7 @@ public class AddFragment extends Fragment {
     EditText urlText;
     Button addFeedButton;
     Button fetchButton;
+    OrmaDatabase orma;
 
     public AddFragment() {
     }
@@ -47,6 +51,8 @@ public class AddFragment extends Fragment {
     public void onStart() {
         super.onStart();
         Log.d(TAG, "Called onStart");
+        orma = OrmaDatabase.builder(getContext()).build();
+
         urlText = (EditText) getActivity().findViewById(R.id.urlText);
         addFeedButton = (Button) getActivity().findViewById(R.id.addFeedButton);
         fetchButton = (Button) getActivity().findViewById(R.id.fetchButton);
@@ -66,7 +72,7 @@ public class AddFragment extends Fragment {
         fetchButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(getActivity(), "FETCHED", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getActivity(), "FETCHED(DOES NOT WORK, LOL)", Toast.LENGTH_SHORT).show();
             }
         });
     }
@@ -76,9 +82,8 @@ public class AddFragment extends Fragment {
         String url = urlText.getText().toString();
         if (url.startsWith("http://") || url.startsWith("https://")) {
             // Insert data to database
-            //DatabaseHandler databaseHandler = new DatabaseHandler();
-            //databaseHandler
-            Toast.makeText(getActivity(), "INSERT DATA TO DATABASE, BUT WORKING IN PROGRESS:(", Toast.LENGTH_SHORT).show();
+
+            Toast.makeText(getActivity(), "INSERT DATA TO DATABASE", Toast.LENGTH_SHORT).show();
         } else {
             Toast.makeText(getActivity(), "URL ERROR. Please make sure correct url", Toast.LENGTH_SHORT).show();
         }

@@ -29,6 +29,7 @@ public class MainFragment extends Fragment {
     MainAdapter mainAdapter;
     ListView mListView;
     boolean flag = false;
+    boolean flagSec = false;
 
     public MainFragment() {
     }
@@ -44,6 +45,10 @@ public class MainFragment extends Fragment {
         Log.d(TAG, "Called onCreate");
         init();
         if (Utils.networkCheck(this.getContext())) {
+            // Cache Database check
+            // if it is null, get feed urls from database
+
+            // dummy, it's hard coding.
             kicks();
         } else {
             Toast.makeText(getActivity(), "Internet is not available", Toast.LENGTH_SHORT).show();
@@ -75,7 +80,7 @@ public class MainFragment extends Fragment {
         @Override
         public void onRefresh() {
             if (Utils.networkCheck(getContext())) {
-                kicks2();
+                // get feed urls from database
             } else {
                 Toast.makeText(getActivity(), "Internet is not available", Toast.LENGTH_SHORT).show();
             }
@@ -98,15 +103,8 @@ public class MainFragment extends Fragment {
         //backgroundGetFeed.taskStart("http://gihyo.jp/design/feed/atom");
     }
 
-    private void kicks2() {
-        backgroundGetFeed.taskStart("https://www.smashingmagazine.com/feed/");
-        //backgroundGetFeed.taskStart("http://gihyo.jp/design/feed/atom");
-    }
-
-    private void test(List<RssItem> items) {
-        mainAdapter.setMainAdapater(items);
-        mainAdapter.notifyDataSetChanged();
-    }
+    //mainAdapter.setMainAdapater(items);
+    //mainAdapter.notifyDataSetChanged();
 
     private void setResult(List<RssItem> items) {
         mainAdapter.setMainAdapater(items);
@@ -127,8 +125,6 @@ public class MainFragment extends Fragment {
                     if (!flag) {
                         setResult(backgroundGetFeed.getItems());
                         flag = true;
-                    } else {
-                        test(backgroundGetFeed.getItems());
                     }
                     break;
             }
