@@ -63,7 +63,6 @@ public class MainAdapter extends BaseAdapter {
     @Override
     public void notifyDataSetChanged() {
         Log.d(TAG, "Data Changed");
-        sortList();
         super.notifyDataSetChanged();
     }
 
