@@ -7,10 +7,23 @@
     <EditText
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:ems="10"
+        android:id="@+id/titleText"
+        android:hint="@string/hint_edit_text_title"
+        android:textSize="20sp"
+        android:paddingTop="10dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:layout_marginTop="10dp"
+        android:inputType="text" />
+
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
         android:inputType="textUri"
         android:ems="10"
         android:id="@+id/urlText"
-        android:hint="http://"
+        android:hint="@string/hint_edit_text_url"
         style="@android:style/Widget.EditText"
         android:textSize="20sp"
         android:paddingTop="10dp"
@@ -18,23 +31,25 @@
         android:layout_marginRight="10dp"
         android:layout_marginTop="10dp" />
 
+    <AutoCompleteTextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/autoCompleteTextView"
+        android:textSize="20sp"
+        android:paddingTop="10dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:layout_marginTop="10dp"
+        android:hint="Category" />
+
     <Button
         android:text="ADD FEED"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/addFeedButton"
-        android:textSize="16sp"
+        android:textSize="18sp"
         android:layout_marginTop="10dp"
         android:layout_marginLeft="10dp"
         android:layout_marginRight="10dp" />
 
-    <Button
-        android:text="FETCH FEED"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:textSize="16sp"
-        android:id="@+id/fetchButton"
-        android:layout_marginTop="10dp"
-        android:layout_marginLeft="10dp"
-        android:layout_marginRight="10dp" />
 </LinearLayout>

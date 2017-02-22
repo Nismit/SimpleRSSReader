@@ -1,3 +1,5 @@
 <resources>
-    <string name="app_name">SimpleRSSReader</string>
+    <string name="app_name">Simple RSS Reader</string>
+    <string name="hint_edit_text_title">Site Title</string>
+    <string name="hint_edit_text_url">http(s)://</string>
 </resources>
