@@ -26,6 +26,7 @@ public class MainFragment extends Fragment {
     private SwipeRefreshLayout mSwipeRefreshLayout;
     private AsyncGetFeed getFeed;
     private MainAdapter mainAdapter;
+    private boolean isCache = false;
     private boolean isRefresh = false;
     public ListView mListView;
 
@@ -61,11 +62,17 @@ public class MainFragment extends Fragment {
     public void onStart() {
         Log.d(TAG, "Called onStart");
         super.onStart();
+        if(isCache) {
+            Log.d(TAG, "Got Cached");
+            mListView.setAdapter(mainAdapter);
+        }
     }
 
     private SwipeRefreshLayout.OnRefreshListener mOnRefreshListener = new SwipeRefreshLayout.OnRefreshListener() {
         @Override
         public void onRefresh() {
+            // if user swiped twice, it will be crash.
+            // should be reload after notifydata changed
             isRefresh = true;
             fetchData();
             mSwipeRefreshLayout.setRefreshing(false);
@@ -94,22 +101,15 @@ public class MainFragment extends Fragment {
         }
     }
 
-    //backgroundGetFeed.addObserver(observer);
-    //backgroundGetFeed.taskStart("http://android-developers.blogspot.com/atom.xml");
-    //backgroundGetFeed.taskStart("https://www.smashingmagazine.com/feed/");
-    //backgroundGetFeed.taskStart("http://feeds2.feedburner.com/tympanus");
-    //https://css-tricks.com/feed/
-    //backgroundGetFeed.taskStart("http://feeds2.feedburner.com/webdesignerdepot");
-    //backgroundGetFeed.taskStart("http://gihyo.jp/design/feed/atom");
-    //mainAdapter.setMainAdapater(items);
-    //mainAdapter.notifyDataSetChanged();
-
     private void showResult() {
         mainAdapter.sortList();
         if(isRefresh) {
+            Log.d(TAG, "notify data changed");
             mainAdapter.notifyDataSetChanged();
         } else {
+            Log.d(TAG, "First time to setAdapter");
             mListView.setAdapter(mainAdapter);
+            isCache = true;
         }
     }
 

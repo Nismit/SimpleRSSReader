@@ -55,10 +55,16 @@ public class MainAdapter extends BaseAdapter {
         Collections.sort(this.items, new Comparator<RssItem>() {
             @Override
             public int compare(RssItem o1, RssItem o2) {
-                //Log.d(TAG, "compare1: "+ (int) o1.getPublished());
-                //Log.d(TAG, "compare2: "+ (int) o2.getPublished());
-                return ((int) o2.getPublished()) - ((int) o1.getPublished());
-                //return (int) (o2.getPublished() - o1.getPublished());
+                //Log.d(TAG, "compare1: "+ (int) o1.getPublished() + " - "+ (int) o2.getPublished() + " = " + (((int) o2.getPublished()) - ((int) o1.getPublished())));
+                //return ((int) o2.getPublished()) - ((int) o1.getPublished());
+                //return Long.compare(o1.getPublished(), o2.getPublished());
+                if(o1.getPublished() < o2.getPublished()) {
+                    return 1;
+                }else if(o1.getPublished() > o2.getPublished()) {
+                    return -1;
+                }else {
+                    return 0;
+                }
             }
         });
     }

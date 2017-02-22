@@ -29,12 +29,21 @@ public class AsyncGetFeed extends Observable {
         // set number
         numURLs = feedList.size();
         // For loop
-        for (int i = 0; i < numURLs; i++) {
-            String url = feedList.get(i).url;
-            //Log.d(TAG, "URL: "+ url);
-            GetFeedData getFeedData = new GetFeedData();
-            getFeedData.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR, url);
-        }
+//        for (int i = 0; i < numURLs; i++) {
+//            String url = feedList.get(i).url;
+//            Log.d(TAG, "URL: "+ url);
+//            GetFeedData getFeedData = new GetFeedData();
+//            getFeedData.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR, url);
+//        }
+        String url0 = feedList.get(0).url;
+        GetFeedData getFeedData0 = new GetFeedData();
+        getFeedData0.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR, url0);
+        String url1 = feedList.get(1).url;
+        GetFeedData getFeedData1 = new GetFeedData();
+        getFeedData1.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR, url1);
+        String url2 = feedList.get(2).url;
+        GetFeedData getFeedData2 = new GetFeedData();
+        getFeedData2.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR, url2);
     }
 
     public void taskProgress() {
@@ -42,7 +51,6 @@ public class AsyncGetFeed extends Observable {
         notifyObservers(Event.PROGRESS);
         // Notify Feed URLs how many numbers.
         // if data returns same the numbers, run finish
-        Log.d(TAG, "TOTAL:"+ numURLs);
         if(finishedURLs <= numURLs) {
             finishedURLs++;
         }
@@ -76,7 +84,7 @@ public class AsyncGetFeed extends Observable {
     final class GetFeedData extends AsyncTask<String, Void, List<RssItem>> {
         @Override
         protected List<RssItem> doInBackground(String... params) {
-            Log.d(TAG, "URL: "+ params[0]);
+            //Log.d(TAG, "URL: "+ params[0]);
             RssReader reader = new RssReader(params[0]);
             return reader.getItems();
         }
