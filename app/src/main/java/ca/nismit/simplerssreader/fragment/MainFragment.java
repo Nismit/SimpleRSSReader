@@ -122,6 +122,7 @@ public class MainFragment extends Fragment {
 
             switch ((AsyncGetFeed.Event)arg) {
                 case START:
+                    Toast.makeText(getActivity(), "Fetching RSS Feed", Toast.LENGTH_SHORT).show();
                     break;
                 case PROGRESS:
                     // Show progress (2/13 Downloading.. sth like that)
@@ -134,6 +135,7 @@ public class MainFragment extends Fragment {
                 case FINISH:
                     // Sort array and display
                     Log.d(TAG, "SUCCESS!");
+                    Toast.makeText(getActivity(), "Fetched!", Toast.LENGTH_SHORT).show();
                     showResult();
                     break;
             }

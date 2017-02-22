@@ -19,9 +19,8 @@ import ca.nismit.simplerssreader.orma.OrmaDatabase;
 public class AddFragment extends Fragment {
     static final String TAG = AddFragment.class.getSimpleName();
 
-    EditText urlText;
+    EditText titleText, urlText;
     Button addFeedButton;
-    Button fetchButton;
 
     public AddFragment() {
     }
@@ -51,9 +50,8 @@ public class AddFragment extends Fragment {
         initOrma();
 
         urlText = (EditText) getActivity().findViewById(R.id.urlText);
+        titleText = (EditText) getActivity().findViewById(R.id.titleText);
         addFeedButton = (Button) getActivity().findViewById(R.id.addFeedButton);
-        fetchButton = (Button) getActivity().findViewById(R.id.fetchButton);
-
         addFeedButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -63,13 +61,6 @@ public class AddFragment extends Fragment {
                     addFeedUrl();
                 }
 
-            }
-        });
-
-        fetchButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Toast.makeText(getActivity(), "FETCHED(DOES NOT WORK, LOL)", Toast.LENGTH_SHORT).show();
             }
         });
     }
