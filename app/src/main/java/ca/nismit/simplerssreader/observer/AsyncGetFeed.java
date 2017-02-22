@@ -25,25 +25,16 @@ public class AsyncGetFeed extends Observable {
         // TODO
         // CHECK FEED URL DB
         // return list or arraylist
-        List<FeedUrlStore> feedList = FeedUrlStore.getAll();
+        List<FeedUrlStore> feedList = FeedUrlStore.relationGetAll(relation);
         // set number
         numURLs = feedList.size();
         // For loop
-//        for (int i = 0; i < numURLs; i++) {
-//            String url = feedList.get(i).url;
-//            Log.d(TAG, "URL: "+ url);
-//            GetFeedData getFeedData = new GetFeedData();
-//            getFeedData.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR, url);
-//        }
-        String url0 = feedList.get(0).url;
-        GetFeedData getFeedData0 = new GetFeedData();
-        getFeedData0.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR, url0);
-        String url1 = feedList.get(1).url;
-        GetFeedData getFeedData1 = new GetFeedData();
-        getFeedData1.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR, url1);
-        String url2 = feedList.get(2).url;
-        GetFeedData getFeedData2 = new GetFeedData();
-        getFeedData2.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR, url2);
+        for (int i = 0; i < numURLs; i++) {
+            String url = feedList.get(i).url;
+            Log.d(TAG, "URL: "+ url);
+            GetFeedData getFeedData = new GetFeedData();
+            getFeedData.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR, url);
+        }
     }
 
     public void taskProgress() {
