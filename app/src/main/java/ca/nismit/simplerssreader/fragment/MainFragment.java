@@ -11,28 +11,24 @@ import android.view.ViewGroup;
 import android.widget.ListView;
 import android.widget.Toast;
 
-import java.util.List;
 import java.util.Observable;
 import java.util.Observer;
 
 import ca.nismit.simplerssreader.R;
 import ca.nismit.simplerssreader.adapter.MainAdapter;
-import ca.nismit.simplerssreader.observer.BackgroundGetFeed;
-import ca.nismit.simplerssreader.rss.RssItem;
+import ca.nismit.simplerssreader.observer.AsyncGetFeed;
+import ca.nismit.simplerssreader.orma.FeedUrlStore;
 import ca.nismit.simplerssreader.util.Utils;
 
 public class MainFragment extends Fragment {
     static final String TAG = MainFragment.class.getSimpleName();
 
     private SwipeRefreshLayout mSwipeRefreshLayout;
-    BackgroundGetFeed backgroundGetFeed = new BackgroundGetFeed();
+    AsyncGetFeed getFeed;
     MainAdapter mainAdapter;
     ListView mListView;
-    boolean flag = false;
-    boolean flagSec = false;
 
-    public MainFragment() {
-    }
+    public MainFragment() { }
 
     public static MainFragment newInstance() {
         return new MainFragment();
@@ -43,16 +39,10 @@ public class MainFragment extends Fragment {
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         Log.d(TAG, "Called onCreate");
-        init();
-        if (Utils.networkCheck(this.getContext())) {
-            // Cache Database check
-            // if it is null, get feed urls from database
-
-            // dummy, it's hard coding.
-            kicks();
-        } else {
-            Toast.makeText(getActivity(), "Internet is not available", Toast.LENGTH_SHORT).show();
-        }
+        initOrma();
+        initListView();
+        initObserver();
+        fetchData();
     }
 
     @Nullable
@@ -68,64 +58,77 @@ public class MainFragment extends Fragment {
 
     @Override
     public void onStart() {
-        super.onStart();
         Log.d(TAG, "Called onStart");
-
-        if (flag) {
-            setResult(backgroundGetFeed.getItems());
-        }
+        super.onStart();
     }
 
     private SwipeRefreshLayout.OnRefreshListener mOnRefreshListener = new SwipeRefreshLayout.OnRefreshListener() {
         @Override
         public void onRefresh() {
-            if (Utils.networkCheck(getContext())) {
-                // get feed urls from database
-            } else {
-                Toast.makeText(getActivity(), "Internet is not available", Toast.LENGTH_SHORT).show();
-            }
+            fetchData();
             mSwipeRefreshLayout.setRefreshing(false);
         }
     };
 
-    void init() {
-        Log.d(TAG, "Called init()");
+    void initListView() {
         mainAdapter = new MainAdapter(getContext());
+        mListView.setAdapter(mainAdapter);
     }
 
-    private void kicks() {
-        backgroundGetFeed.addObserver(observer);
-        backgroundGetFeed.taskStart("http://android-developers.blogspot.com/atom.xml");
-        //backgroundGetFeed.taskStart("https://www.smashingmagazine.com/feed/");
-        //backgroundGetFeed.taskStart("http://feeds2.feedburner.com/tympanus");
-        //https://css-tricks.com/feed/
-        //backgroundGetFeed.taskStart("http://feeds2.feedburner.com/webdesignerdepot");
-        //backgroundGetFeed.taskStart("http://gihyo.jp/design/feed/atom");
+    void initObserver() {
+        getFeed = new AsyncGetFeed();
+        getFeed.addObserver(observer);
     }
 
+    void initOrma() {
+        FeedUrlStore.initRelaion(getContext());
+    }
+
+    void fetchData() {
+        if (Utils.networkCheck(this.getContext())) {
+            // Cache Database check
+            // if it is null, get feed urls from database
+            getFeed.taskStart();
+        } else {
+            Toast.makeText(getActivity(), "Internet is not available", Toast.LENGTH_SHORT).show();
+        }
+    }
+
+
+    //backgroundGetFeed.addObserver(observer);
+    //backgroundGetFeed.taskStart("http://android-developers.blogspot.com/atom.xml");
+    //backgroundGetFeed.taskStart("https://www.smashingmagazine.com/feed/");
+    //backgroundGetFeed.taskStart("http://feeds2.feedburner.com/tympanus");
+    //https://css-tricks.com/feed/
+    //backgroundGetFeed.taskStart("http://feeds2.feedburner.com/webdesignerdepot");
+    //backgroundGetFeed.taskStart("http://gihyo.jp/design/feed/atom");
     //mainAdapter.setMainAdapater(items);
     //mainAdapter.notifyDataSetChanged();
 
-    private void setResult(List<RssItem> items) {
-        mainAdapter.setMainAdapater(items);
-        mListView.setAdapter(mainAdapter);
+    private void showResult() {
+        mainAdapter.sortList();
+        mainAdapter.notifyDataSetChanged();
     }
 
     private Observer observer = new Observer() {
         @Override
         public void update(Observable o, Object arg) {
-            if(!(arg instanceof BackgroundGetFeed.Event)){
+            if(!(arg instanceof AsyncGetFeed.Event)){
                 return;
             }
 
-            switch ((BackgroundGetFeed.Event)arg) {
+            switch ((AsyncGetFeed.Event)arg) {
                 case START:
                     break;
+                case PROGRESS:
+                    // Show progress (2/13 Downloading.. sth like that)
+                    mainAdapter.setMainAdapater(getFeed.getItems());
+                    break;
+                case FAILURE:
+                    break;
                 case FINISH:
-                    if (!flag) {
-                        setResult(backgroundGetFeed.getItems());
-                        flag = true;
-                    }
+                    // Sort array and display
+                    showResult();
                     break;
             }
         }

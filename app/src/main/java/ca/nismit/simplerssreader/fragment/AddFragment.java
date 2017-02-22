@@ -1,7 +1,6 @@
 package ca.nismit.simplerssreader.fragment;
 
 import android.os.Bundle;
-import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.util.Log;
@@ -13,11 +12,8 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import ca.nismit.simplerssreader.R;
-import ca.nismit.simplerssreader.orma.DatabaseHandler;
 import ca.nismit.simplerssreader.orma.FeedUrlStore;
 import ca.nismit.simplerssreader.orma.OrmaDatabase;
-
-import static ca.nismit.simplerssreader.util.Utils.getByteArrayUrlData;
 
 public class AddFragment extends Fragment {
     static final String TAG = AddFragment.class.getSimpleName();
@@ -25,7 +21,6 @@ public class AddFragment extends Fragment {
     EditText urlText;
     Button addFeedButton;
     Button fetchButton;
-    OrmaDatabase orma;
 
     public AddFragment() {
     }
@@ -51,7 +46,8 @@ public class AddFragment extends Fragment {
     public void onStart() {
         super.onStart();
         Log.d(TAG, "Called onStart");
-        orma = OrmaDatabase.builder(getContext()).build();
+
+        initOrma();
 
         urlText = (EditText) getActivity().findViewById(R.id.urlText);
         addFeedButton = (Button) getActivity().findViewById(R.id.addFeedButton);
@@ -88,5 +84,9 @@ public class AddFragment extends Fragment {
             Toast.makeText(getActivity(), "URL ERROR. Please make sure correct url", Toast.LENGTH_SHORT).show();
         }
 
+    }
+
+    void initOrma() {
+        FeedUrlStore.initRelaion(getContext());
     }
 }
