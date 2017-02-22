@@ -2,6 +2,7 @@ package ca.nismit.simplerssreader.fragment;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.annotation.UiThread;
 import android.support.v4.app.Fragment;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -73,13 +74,23 @@ public class AddFragment extends Fragment {
         });
     }
 
+    @UiThread
     private void addFeedUrl() {
         Log.d(TAG, "Call addFeedUrl");
         String url = urlText.getText().toString();
         if (url.startsWith("http://") || url.startsWith("https://")) {
             // Insert data to database
+            final FeedUrlStore feedData = new FeedUrlStore(url);
+            new Thread(new Runnable() {
+                @Override
+                public void run() {
+                    feedData.insertData();
+                    //Log.d(TAG,"YEAH");
+                    Log.d(TAG, "run: しましたね");
+                }
+            }).start();
 
-            Toast.makeText(getActivity(), "INSERT DATA TO DATABASE", Toast.LENGTH_SHORT).show();
+            //Toast.makeText(getActivity(), "INSERT DATA TO DATABASE", Toast.LENGTH_SHORT).show();
         } else {
             Toast.makeText(getActivity(), "URL ERROR. Please make sure correct url", Toast.LENGTH_SHORT).show();
         }

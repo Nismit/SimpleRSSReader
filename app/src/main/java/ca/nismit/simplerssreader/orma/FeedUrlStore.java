@@ -4,30 +4,16 @@ package ca.nismit.simplerssreader.orma;
 import android.content.Context;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.annotation.WorkerThread;
 
 import com.github.gfx.android.orma.annotation.Column;
 import com.github.gfx.android.orma.annotation.PrimaryKey;
 import com.github.gfx.android.orma.annotation.Table;
 
+import java.util.List;
+
 @Table
 public class FeedUrlStore {
-
-    private static FeedUrlStore_Relation relation;
-
-    public static void initRelaion(Context context) {
-        relation = getRelation(context);
-    }
-
-    @Nullable
-    static FeedUrlStore_Relation getRelation() {
-        return relation;
-    }
-
-    @Nullable
-    static FeedUrlStore_Relation getRelation(Context context) {
-        OrmaDatabase orma = OrmaDatabase.builder(context).build();
-        return orma.relationOfFeedUrlStore();
-    }
 
 //    public static FeedUrlStore create(@NonNull String title, @NonNull String url, @Nullable String category) {
 //        FeedUrlStore feedUrlStore = new FeedUrlStore();
@@ -37,13 +23,41 @@ public class FeedUrlStore {
 //        return feedUrlStore;
 //    }
 
+
+    public FeedUrlStore() {
+    }
+
+    public FeedUrlStore(String url) {
+        this.title = url;
+        this.url = url;
+    }
+
+    private static FeedUrlStore_Relation relation;
+
+    public static void initRelaion(Context context) {
+        relation = getRelation(context);
+    }
+
+    @Nullable
+    public static FeedUrlStore_Relation getRelation() {
+        return relation;
+    }
+
+    @Nullable
+    static FeedUrlStore_Relation getRelation(Context context) {
+        OrmaDatabase orma = OrmaDatabase.builder(context).build();
+        return orma.relationOfFeedUrlStore();
+    }
+
     @PrimaryKey(autoincrement = true)
     public long id;
 
     @Column(indexed = true)
+    @NonNull
     public String title;
 
     @Column(indexed = true)
+    @NonNull
     public String url;
 
     @Column
@@ -53,4 +67,14 @@ public class FeedUrlStore {
     @Column(defaultExpr = "false")
     @NonNull
     public boolean delete = false;
+
+    @WorkerThread
+    public void insertData() {
+        id = getRelation().inserter().execute(this);
+    }
+
+    @WorkerThread
+    public static List<FeedUrlStore> getAll() {
+        return getRelation().selector().toList();
+    }
 }

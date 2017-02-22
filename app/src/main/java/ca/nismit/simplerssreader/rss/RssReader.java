@@ -19,11 +19,14 @@ public class RssReader {
     public List<RssItem> getItems() {
         try {
             byte[] byteArray = getByteArrayUrlData(this.url);
-            //Log.d(TAG, "Byte Array: " + byteArray);
-            String data = new String(byteArray);
-            XmlParser xmlParser = new XmlParser();
-            items = xmlParser.parse(data);
-            return items;
+            if(byteArray != null) {
+                String data = new String(byteArray);
+                XmlParser xmlParser = new XmlParser();
+                items = xmlParser.parse(data);
+                return items;
+            } else {
+                return null;
+            }
         } catch (Exception e) {
             e.printStackTrace();
         }

@@ -24,9 +24,10 @@ public class MainFragment extends Fragment {
     static final String TAG = MainFragment.class.getSimpleName();
 
     private SwipeRefreshLayout mSwipeRefreshLayout;
-    AsyncGetFeed getFeed;
-    MainAdapter mainAdapter;
-    ListView mListView;
+    private AsyncGetFeed getFeed;
+    private MainAdapter mainAdapter;
+    private boolean isRefresh = false;
+    public ListView mListView;
 
     public MainFragment() { }
 
@@ -65,6 +66,7 @@ public class MainFragment extends Fragment {
     private SwipeRefreshLayout.OnRefreshListener mOnRefreshListener = new SwipeRefreshLayout.OnRefreshListener() {
         @Override
         public void onRefresh() {
+            isRefresh = true;
             fetchData();
             mSwipeRefreshLayout.setRefreshing(false);
         }
@@ -72,7 +74,6 @@ public class MainFragment extends Fragment {
 
     void initListView() {
         mainAdapter = new MainAdapter(getContext());
-        mListView.setAdapter(mainAdapter);
     }
 
     void initObserver() {
@@ -86,14 +87,12 @@ public class MainFragment extends Fragment {
 
     void fetchData() {
         if (Utils.networkCheck(this.getContext())) {
-            // Cache Database check
             // if it is null, get feed urls from database
-            getFeed.taskStart();
+            getFeed.taskStart(FeedUrlStore.getRelation());
         } else {
             Toast.makeText(getActivity(), "Internet is not available", Toast.LENGTH_SHORT).show();
         }
     }
-
 
     //backgroundGetFeed.addObserver(observer);
     //backgroundGetFeed.taskStart("http://android-developers.blogspot.com/atom.xml");
@@ -107,7 +106,11 @@ public class MainFragment extends Fragment {
 
     private void showResult() {
         mainAdapter.sortList();
-        mainAdapter.notifyDataSetChanged();
+        if(isRefresh) {
+            mainAdapter.notifyDataSetChanged();
+        } else {
+            mListView.setAdapter(mainAdapter);
+        }
     }
 
     private Observer observer = new Observer() {
@@ -122,12 +125,15 @@ public class MainFragment extends Fragment {
                     break;
                 case PROGRESS:
                     // Show progress (2/13 Downloading.. sth like that)
+                    Log.d(TAG, "PROGRESS");
                     mainAdapter.setMainAdapater(getFeed.getItems());
                     break;
                 case FAILURE:
+                    Log.d(TAG, "FAILURE");
                     break;
                 case FINISH:
                     // Sort array and display
+                    Log.d(TAG, "SUCCESS!");
                     showResult();
                     break;
             }
