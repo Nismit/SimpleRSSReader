@@ -116,8 +116,9 @@ public class XmlParser {
             }
         }
 
-
-        if(summary == null) {
+        if(content == null && summary != null) {
+            content = summary;
+        } else if(content != null && summary == null) {
             summary = content;
         }
 
@@ -166,8 +167,10 @@ public class XmlParser {
             }
         }
 
-        if(content == null) {
+        if(content == null && summary != null) {
             content = summary;
+        } else if(content != null && summary == null) {
+            summary = content;
         }
 
         if(thumbnail == null && content != null) {
