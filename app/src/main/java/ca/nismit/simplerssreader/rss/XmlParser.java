@@ -32,6 +32,7 @@ public class XmlParser {
     private static final int TAG_PUBLISHED = 7;
     private static final String ns = null;
     private static String feedType = null;
+    private String siteTitle, siteUrl;
     //private static final String feed[] = {"title", "summary", "content", "thumbnail", "published"};
     //private static final String rss[] = {"title", "description", "content", "thumbnail", "pubDate"};
 
