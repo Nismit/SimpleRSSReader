@@ -40,7 +40,7 @@ public class MainFragment extends Fragment {
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        Log.d(TAG, "Called onCreate");
+        Log.d(TAG, "onCreate");
         initOrma();
         initListView();
         initObserver();
@@ -50,22 +50,35 @@ public class MainFragment extends Fragment {
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        Log.d(TAG, "Called onCreateView");
+        Log.d(TAG, "onCreateView");
         View v = inflater.inflate(R.layout.fragment_main, container, false);
         mListView = (ListView) v.findViewById(R.id.f_listview);
         mSwipeRefreshLayout = (SwipeRefreshLayout) v.findViewById(R.id.refresh);
         mSwipeRefreshLayout.setOnRefreshListener(mOnRefreshListener);
+        mSwipeRefreshLayout.setColorSchemeResources(R.color.loaderColorOne, R.color.loaderColorTwo, R.color.loaderColorThree, R.color.loaderColorFour);
         return v;
     }
 
     @Override
     public void onStart() {
-        Log.d(TAG, "Called onStart");
+        Log.d(TAG, "onStart");
         super.onStart();
         if(isCache) {
             Log.d(TAG, "Got Cached");
             mListView.setAdapter(mainAdapter);
         }
+    }
+
+    @Override
+    public void onResume() {
+        Log.d(TAG, "onResume");
+        super.onResume();
+    }
+
+    @Override
+    public void onStop() {
+        Log.d(TAG, "onStop");
+        super.onStop();
     }
 
     private SwipeRefreshLayout.OnRefreshListener mOnRefreshListener = new SwipeRefreshLayout.OnRefreshListener() {
@@ -75,13 +88,11 @@ public class MainFragment extends Fragment {
             // should be reload after notifydata changed
             isRefresh = true;
             fetchData();
-            mSwipeRefreshLayout.setRefreshing(false);
         }
     };
 
     void initListView() {
         mainAdapter = new MainAdapter(getContext());
-//        mListView.setAdapter(mainAdapter);
     }
 
     void initObserver() {
@@ -107,6 +118,9 @@ public class MainFragment extends Fragment {
         if(isRefresh) {
             Log.d(TAG, "notify data changed");
             mainAdapter.notifyDataSetChanged();
+            if(mSwipeRefreshLayout.isRefreshing()) {
+                mSwipeRefreshLayout.setRefreshing(false);
+            }
         } else {
             Log.d(TAG, "First time to setAdapter");
             mListView.setAdapter(mainAdapter);
@@ -123,12 +137,13 @@ public class MainFragment extends Fragment {
 
             switch ((AsyncGetFeed.Event)arg) {
                 case START:
-                    Toast.makeText(getActivity(), "Fetching RSS Feed", Toast.LENGTH_SHORT).show();
+                    //Toast.makeText(getActivity(), "Fetching RSS Feed", Toast.LENGTH_SHORT).show();
                     mainAdapter.clearData();
                     break;
                 case PROGRESS:
                     // Show progress (2/13 Downloading.. sth like that)
-                    Log.d(TAG, "PROGRESS");
+                    //
+                    // Log.d(TAG, "PROGRESS");
                     mainAdapter.setMainAdapater(getFeed.getItems());
                     break;
                 case FAILURE:
