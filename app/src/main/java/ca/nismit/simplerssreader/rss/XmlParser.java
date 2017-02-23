@@ -1,5 +1,6 @@
 package ca.nismit.simplerssreader.rss;
 
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.util.Log;
 import android.util.Xml;
@@ -26,8 +27,9 @@ public class XmlParser {
     private static final int TAG_SUMMARY = 2;
     private static final int TAG_CONTENT = 3;
     private static final int TAG_LINK = 4;
-    private static final int TAG_THUMBNAIL = 5;
-    private static final int TAG_PUBLISHED = 6;
+    private static final int TAG_RSSLINK = 5;
+    private static final int TAG_THUMBNAIL = 6;
+    private static final int TAG_PUBLISHED = 7;
     private static final String ns = null;
     private static String feedType = null;
     //private static final String feed[] = {"title", "summary", "content", "thumbnail", "published"};
@@ -101,16 +103,17 @@ public class XmlParser {
             }else if(name.equals("content")) {
                 content = readTag(parser, "content", TAG_CONTENT);
                 //Log.d(TAG, "CONTENT " + content);
-//            }else if(name.equals("link")) {
-//                link = readTag(parser, "link", TAG_LINK);
+            }else if(name.equals("link")) {
+                link = readTag(parser, "link", TAG_LINK);
             }else if(name.equals("thumbnail")) {
                 thumbnail = readTag(parser, "thumbnail", TAG_THUMBNAIL);
             }else if(name.equals("published")) {
-                date = readTag(parser, "published", TAG_PUBLISHED);
-                Date d = dateConverter(date);
-                //Log.d(TAG, "DATE " + date);
+                Date d = dateConverter(readTag(parser, "published", TAG_PUBLISHED));
                 //Log.d(TAG, "LONG TIME " + date.getTime());
                 published = d.getTime();
+                //Log.d(TAG, "DATE " + new Date(published));
+                //Log.d(TAG, "DATE " + formatDate(published));
+                date = formatDate(published);
             }else {
                 skip(parser);
             }
@@ -152,16 +155,16 @@ public class XmlParser {
                 summary = readTag(parser, "description", TAG_SUMMARY);
             }else if(name.equals("content")) {
                 content = readTag(parser, "description", TAG_CONTENT);
-//            }else if(name.equals("link")) {
-//                link = readTag(parser, "link", TAG_LINK);
+            }else if(name.equals("link")) {
+                link = readTag(parser, "link", TAG_RSSLINK);
             }else if(name.equals("thumbnail")) {
                 thumbnail = readTag(parser, "thumbnail", TAG_THUMBNAIL);
             }else if(name.equals("pubDate")) {
-                date = readTag(parser, "pubDate", TAG_PUBLISHED);
-                Date d = dateConverter(date);
+                Date d = dateConverter(readTag(parser, "pubDate", TAG_PUBLISHED));
                 //Log.d(TAG, "DATE " + date);
                 //Log.d(TAG, "LONG TIME " + date.getTime());
                 published = d.getTime();
+                date = formatDate(published);
             }else {
                 skip(parser);
             }
@@ -190,6 +193,8 @@ public class XmlParser {
                 return readBasicTag(parser, tagName);
             case TAG_LINK:
                 return readLink(parser);
+            case TAG_RSSLINK:
+                return readRssLink(parser);
             case TAG_THUMBNAIL:
                 return readBasicTag(parser, tagName);
             case TAG_PUBLISHED:
@@ -218,9 +223,9 @@ public class XmlParser {
     private String readLink(XmlPullParser parser) throws XmlPullParserException, IOException {
         String link = null;
         parser.require(XmlPullParser.START_TAG, ns, "link");
-        String tag = parser.getName();
+        //String tag = parser.getName();
         String type = parser.getAttributeValue(null, "rel");
-        if(type.equals("alternate")) {
+        if(type != null && type.equals("alternate")) {
             link = parser.getAttributeValue(null, "href");
         }
 
@@ -228,6 +233,22 @@ public class XmlParser {
             if(parser.nextTag() == XmlPullParser.END_TAG) {
                 break;
             }
+        }
+
+        return link;
+    }
+
+    private String readRssLink(XmlPullParser parser) throws XmlPullParserException, IOException {
+        String link = null;
+        parser.require(XmlPullParser.START_TAG, ns, "link");
+
+        if(parser.next() == XmlPullParser.TEXT) {
+            link = parser.getText();
+            //Log.d(TAG, "TEXT: "+ link);
+        }
+
+        if(parser.nextTag() == XmlPullParser.END_TAG) {
+            //Log.d(TAG, "Perfect");
         }
         return link;
     }
@@ -268,6 +289,13 @@ public class XmlParser {
         } else {
             return date;
         }
+    }
+
+    @NonNull
+    private String formatDate(long miliTime) {
+        Date tempDate = new Date(miliTime);
+        String strDate = new SimpleDateFormat("yyyy/MM/dd").format(tempDate);
+        return strDate;
     }
 
     private void skip(XmlPullParser parser) throws XmlPullParserException, IOException {
