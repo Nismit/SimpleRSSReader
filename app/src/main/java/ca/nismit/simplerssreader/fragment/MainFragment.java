@@ -81,6 +81,7 @@ public class MainFragment extends Fragment {
 
     void initListView() {
         mainAdapter = new MainAdapter(getContext());
+//        mListView.setAdapter(mainAdapter);
     }
 
     void initObserver() {
@@ -123,6 +124,7 @@ public class MainFragment extends Fragment {
             switch ((AsyncGetFeed.Event)arg) {
                 case START:
                     Toast.makeText(getActivity(), "Fetching RSS Feed", Toast.LENGTH_SHORT).show();
+                    mainAdapter.clearData();
                     break;
                 case PROGRESS:
                     // Show progress (2/13 Downloading.. sth like that)

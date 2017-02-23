@@ -22,12 +22,16 @@ public class AsyncGetFeed extends Observable {
     public void taskStart(FeedUrlStore_Relation relation) {
         setChanged();
         notifyObservers(Event.START);
+        // init Numbers
+        numURLs = 0;
+        finishedURLs = 0;
+
         // TODO
         // CHECK FEED URL DB
-        // return list or arraylist
         List<FeedUrlStore> feedList = FeedUrlStore.relationGetAll(relation);
-        // set number
+        // Set total feed URLs
         numURLs = feedList.size();
+
         // For loop
         for (int i = 0; i < numURLs; i++) {
             String url = feedList.get(i).url;
