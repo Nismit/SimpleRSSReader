@@ -60,6 +60,7 @@ public class AsyncGetFeed extends Observable {
         notifyObservers(Event.FAILURE);
         // DB ERROR
         // FETCH ERROR..?
+        finishedURLs++;
     }
 
     public void taskFinish() {
