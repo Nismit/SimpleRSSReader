@@ -77,4 +77,7 @@ public class FeedUrlStore {
     public static List<FeedUrlStore> getAll() {
         return getRelation().selector().toList();
     }
+
+    @WorkerThread
+    public static List<FeedUrlStore> relationGetAll(FeedUrlStore_Relation relation) { return relation.selector().toList(); }
 }
