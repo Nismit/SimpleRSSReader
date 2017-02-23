@@ -4,19 +4,35 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 
 import ca.nismit.simplerssreader.fragment.AddFragment;
+import ca.nismit.simplerssreader.fragment.EditFragment;
 import ca.nismit.simplerssreader.fragment.MainFragment;
 
 public class MainActivity extends AppCompatActivity {
+    static final String TAG = MainActivity.class.getSimpleName();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        //Log.d(TAG, "onCreate");
         setContentView(R.layout.activity_main);
         setUpViews();
+    }
+
+    @Override
+    protected void onStart() {
+        //Log.d(TAG, "onStart");
+        super.onStart();
+    }
+
+    @Override
+    protected void onStop() {
+        //Log.d(TAG, "onStop");
+        super.onStop();
     }
 
     void setUpViews() {
@@ -37,6 +53,9 @@ public class MainActivity extends AppCompatActivity {
         int id = item.getItemId();
         if (id == R.id.add_rss_feed) {
             replaceFragment(AddFragment.newInstance());
+            return true;
+        } else if(id == R.id.edit_rss_database) {
+            replaceFragment(EditFragment.newInstance());
             return true;
         }
         return super.onOptionsItemSelected(item);
