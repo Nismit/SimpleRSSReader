@@ -74,9 +74,4 @@ public class RssItem {
     public void setPublished(long published) {
         this.published = published;
     }
-
-    @Override
-    public boolean equals(Object obj) {
-        return ((RssItem) obj).getTitle().equals(this.getTitle());
-    }
 }
