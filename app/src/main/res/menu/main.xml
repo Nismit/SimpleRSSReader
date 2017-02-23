@@ -3,4 +3,7 @@
 
     <item android:title="ADD RSS FEED"
         android:id="@+id/add_rss_feed" />
+    <item android:title="EDIT RSS FEED"
+        android:id="@+id/edit_rss_database" />
+
 </menu>
