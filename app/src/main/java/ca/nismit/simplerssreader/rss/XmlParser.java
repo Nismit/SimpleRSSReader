@@ -50,7 +50,7 @@ public class XmlParser {
     private void feedType(XmlPullParser parser) throws XmlPullParserException, IOException, ParseException {
         parser.next();
         feedType = parser.getName();
-        Log.d(TAG, "Feed Type: "+ feedType);
+        //Log.d(TAG, "Feed Type: "+ feedType);
     }
 
     private List readFeed(XmlPullParser parser) throws XmlPullParserException, IOException, ParseException {
