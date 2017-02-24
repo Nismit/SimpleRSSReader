@@ -8,6 +8,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.Toast;
 
@@ -67,6 +68,13 @@ public class MainFragment extends Fragment {
             Log.d(TAG, "Got Cached");
             mListView.setAdapter(mainAdapter);
         }
+
+        mListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Log.d(TAG, "onItemClick: "+ mainAdapter.getListItem(position).getLink());
+            }
+        });
     }
 
     @Override

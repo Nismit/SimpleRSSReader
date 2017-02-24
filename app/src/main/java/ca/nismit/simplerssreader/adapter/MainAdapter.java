@@ -46,6 +46,8 @@ public class MainAdapter extends BaseAdapter {
         return items.get(position);
     }
 
+    public RssItem getListItem(int position) { return items.get(position); }
+
     @Override
     public long getItemId(int position) {
         return 0;
