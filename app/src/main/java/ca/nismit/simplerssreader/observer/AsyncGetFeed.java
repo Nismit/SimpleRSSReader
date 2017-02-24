@@ -35,7 +35,7 @@ public class AsyncGetFeed extends Observable {
         // For loop
         for (int i = 0; i < numURLs; i++) {
             String url = feedList.get(i).url;
-            Log.d(TAG, "URL: "+ url);
+            //Log.d(TAG, "URL: "+ url);
             GetFeedData getFeedData = new GetFeedData();
             getFeedData.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR, url);
         }

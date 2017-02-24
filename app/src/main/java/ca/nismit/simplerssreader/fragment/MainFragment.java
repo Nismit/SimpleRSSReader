@@ -142,7 +142,6 @@ public class MainFragment extends Fragment {
                     break;
                 case PROGRESS:
                     // Show progress (2/13 Downloading.. sth like that)
-                    //
                     // Log.d(TAG, "PROGRESS");
                     mainAdapter.setMainAdapater(getFeed.getItems());
                     break;

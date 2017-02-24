@@ -9,7 +9,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 
 import ca.nismit.simplerssreader.fragment.AddFragment;
-import ca.nismit.simplerssreader.fragment.EditFragment;
+import ca.nismit.simplerssreader.fragment.FeedsListFragment;
 import ca.nismit.simplerssreader.fragment.MainFragment;
 
 public class MainActivity extends AppCompatActivity {
@@ -55,7 +55,7 @@ public class MainActivity extends AppCompatActivity {
             replaceFragment(AddFragment.newInstance());
             return true;
         } else if(id == R.id.edit_rss_database) {
-            replaceFragment(EditFragment.newInstance());
+            replaceFragment(FeedsListFragment.newInstance());
             return true;
         }
         return super.onOptionsItemSelected(item);
@@ -64,6 +64,7 @@ public class MainActivity extends AppCompatActivity {
     @Override
     public void onBackPressed() {
         FragmentManager fm = getSupportFragmentManager();
+        Log.d(TAG, "onBackPressed: Stack " + fm.getBackStackEntryCount());
         if (fm.getBackStackEntryCount() > 0) {
             fm.popBackStack();
             return;

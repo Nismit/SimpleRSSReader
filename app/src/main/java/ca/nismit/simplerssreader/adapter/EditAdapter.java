@@ -1,6 +1,7 @@
 package ca.nismit.simplerssreader.adapter;
 
 import android.content.Context;
+import android.graphics.Typeface;
 import android.support.annotation.NonNull;
 import android.util.Log;
 import android.view.View;
@@ -32,7 +33,8 @@ public class EditAdapter extends ArrayAdapter<FeedUrlStore> {
         TextView urlText = (TextView) v.findViewById(android.R.id.text2);
 
         titleText.setText(list.get(position).title);
-        urlText.setText(list.get(position).url);
+        titleText.setTypeface(Typeface.DEFAULT_BOLD);
+        urlText.setText(list.get(position).url + "\nCategory: "+ list.get(position).category);
 
         titleText.setPadding(7,6,7,25);
         urlText.setPadding(7,1,7,25);
