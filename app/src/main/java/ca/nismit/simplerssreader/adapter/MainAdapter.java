@@ -81,24 +81,24 @@ public class MainAdapter extends BaseAdapter {
         super.notifyDataSetChanged();
     }
 
-    public String trimTitle(int position) {
+    public String trimTitle(int position, int length) {
         String title = items.get(position).getTitle();
         // Title Trim
         int titleLength = title.length();
-        if(titleLength >= 25){
-            String titleTrim = title.substring(0, 25) + "...";
+        if(titleLength >= length){
+            String titleTrim = title.substring(0, length) + "...";
             return titleTrim;
         }else{
             return title;
         }
     }
 
-    public String trimSummary(int position) {
+    public String trimSummary(int position, int length) {
         String summary = items.get(position).getSummary();
         // Summary Trim
         int summaryLength = summary.length();
-        if (summaryLength >= 100) {
-            String summaryTrim = summary.substring(0, 98) + "...";
+        if (summaryLength >= length) {
+            String summaryTrim = summary.substring(0, (length - 2)) + "...";
             return summaryTrim;
         } else {
             return summary;
@@ -124,9 +124,26 @@ public class MainAdapter extends BaseAdapter {
 
         items.get(position).setSummary(stipFormat(items.get(position).getSummary()));
 
-        Picasso.with(context).load(items.get(position).getThumbnail()).into(((ImageView)convertView.findViewById(R.id.imageView)));
-        ((TextView)convertView.findViewById(R.id.cTitle)).setText(trimTitle(position));
-        ((TextView)convertView.findViewById(R.id.summary)).setText(trimSummary(position));
+        if(items.get(position).getThumbnail() != null) {
+            Picasso.with(context).load(items.get(position).getThumbnail()).into(((ImageView) convertView.findViewById(R.id.imageView)));
+        } else {
+            ImageView imgView = (ImageView) convertView.findViewById(R.id.imageView);
+            imgView.setVisibility(View.GONE);
+        }
+
+        if(items.get(position).getThumbnail() != null) {
+            ((TextView)convertView.findViewById(R.id.cTitle)).setText(trimTitle(position, 25));
+        } else {
+            ((TextView)convertView.findViewById(R.id.cTitle)).setText(trimTitle(position, 41));
+        }
+
+        if(items.get(position).getThumbnail() != null) {
+            ((TextView)convertView.findViewById(R.id.summary)).setText(trimSummary(position, 100));
+        } else {
+            ((TextView)convertView.findViewById(R.id.summary)).setText(trimSummary(position, 150));
+        }
+
+
         ((TextView)convertView.findViewById(R.id.sitePublishDate)).setText(items.get(position).getDate());
 
         return convertView;
