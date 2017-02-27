@@ -3,6 +3,7 @@ package ca.nismit.simplerssreader.fragment;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -53,6 +54,18 @@ public class FeedsListFragment extends Fragment {
                 //Toast.makeText(getContext(),"Touched!"+list.get(position).id,Toast.LENGTH_SHORT).show();
                 // TODO
                 // replace new fragment to edit table
+                Bundle bundle = new Bundle();
+                bundle.putLong("dbId", list.get(position).id);
+                bundle.putString("siteTitle", list.get(position).title);
+                bundle.putString("siteURL", list.get(position).url);
+                bundle.putString("category", list.get(position).category);
+                FragmentManager fm = getActivity().getSupportFragmentManager();
+                EditListFragment elf = new EditListFragment();
+                elf.setArguments(bundle);
+                fm.beginTransaction()
+                    .replace(R.id.activity_main, elf)
+                    .addToBackStack(null)
+                    .commit();
             }
         });
     }
