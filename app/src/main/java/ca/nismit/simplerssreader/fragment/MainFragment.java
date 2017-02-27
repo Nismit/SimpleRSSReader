@@ -33,15 +33,14 @@ public class MainFragment extends Fragment {
 
     public MainFragment() { }
 
-    public static MainFragment newInstance() {
-        return new MainFragment();
-    }
+    public static MainFragment newInstance() { return new MainFragment(); }
 
     // Calls at once
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         Log.d(TAG, "onCreate");
+
         initOrma();
         initListView();
         initObserver();
@@ -75,18 +74,6 @@ public class MainFragment extends Fragment {
                 Log.d(TAG, "onItemClick: "+ mainAdapter.getListItem(position).getLink());
             }
         });
-    }
-
-    @Override
-    public void onResume() {
-        Log.d(TAG, "onResume");
-        super.onResume();
-    }
-
-    @Override
-    public void onStop() {
-        Log.d(TAG, "onStop");
-        super.onStop();
     }
 
     private SwipeRefreshLayout.OnRefreshListener mOnRefreshListener = new SwipeRefreshLayout.OnRefreshListener() {
@@ -159,7 +146,7 @@ public class MainFragment extends Fragment {
                 case FINISH:
                     // Sort array and display
                     Log.d(TAG, "SUCCESS!");
-                    Toast.makeText(getActivity(), "Fetched!", Toast.LENGTH_SHORT).show();
+                    //Toast.makeText(getActivity(), "Fetched!", Toast.LENGTH_SHORT).show();
                     showResult();
                     break;
             }
