@@ -30,7 +30,7 @@ public class MainAdapter extends BaseAdapter {
     public MainAdapter(Context context) {
         this.context = context;
         this.layoutInflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-        Log.d(TAG, "Created main adapter");
+        //Log.d(TAG, "Created main adapter");
     }
 
     public void setMainAdapater(List<RssItem> items) {
