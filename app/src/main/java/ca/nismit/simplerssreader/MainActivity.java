@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 
 import ca.nismit.simplerssreader.fragment.AddFragment;
 import ca.nismit.simplerssreader.fragment.FeedsListFragment;
@@ -18,9 +19,12 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        //Log.d(TAG, "onCreate");
+        Log.d(TAG, "onCreate");
         setContentView(R.layout.activity_main);
-        setUpViews();
+
+        if (savedInstanceState == null) {
+            setUpViews();
+        }
     }
 
     @Override
@@ -30,12 +34,42 @@ public class MainActivity extends AppCompatActivity {
     }
 
     @Override
+    protected void onRestart() {
+        //Log.d(TAG, "onRestart");
+        super.onRestart();
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+    }
+
+    @Override
     protected void onStop() {
         //Log.d(TAG, "onStop");
         super.onStop();
     }
 
+    @Override
+    protected void onDestroy() {
+        //Log.d(TAG, "onDestroy");
+        super.onDestroy();
+    }
+
+    @Override
+    protected void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+        //Log.d(TAG, "onSaveInstanceState");
+    }
+
+    @Override
+    protected void onRestoreInstanceState(Bundle savedInstanceState) {
+        super.onRestoreInstanceState(savedInstanceState);
+        //Log.d(TAG, "onRestoreInstanceState");
+    }
+
     void setUpViews() {
+        Log.d(TAG, "setUpViews");
         getSupportFragmentManager()
                 .beginTransaction()
                 .add(R.id.activity_main, MainFragment.newInstance())
