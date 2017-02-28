@@ -14,7 +14,7 @@ import java.util.List;
 
 @Table
 public class FeedUrlStore {
-    
+
     public FeedUrlStore() {
     }
 
