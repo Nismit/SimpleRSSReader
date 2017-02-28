@@ -56,8 +56,7 @@
                 android:id="@+id/c_url"
                 android:textSize="12sp"
                 tools:text="www.google.com"
-                android:layout_weight="1"
-                android:text="www.google.com" />
+                android:layout_weight="1" />
 
             <TextView
                 android:layout_width="wrap_content"
