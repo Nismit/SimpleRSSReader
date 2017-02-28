@@ -63,9 +63,11 @@ public class FeedsListFragment extends Fragment {
                 EditListFragment elf = new EditListFragment();
                 elf.setArguments(bundle);
                 fm.beginTransaction()
-                    .replace(R.id.activity_main, elf)
-                    .addToBackStack(null)
-                    .commit();
+                        .setCustomAnimations(
+                                R.anim.slide_in_right, android.R.anim.slide_out_right)
+                        .replace(R.id.activity_main, elf)
+                        .addToBackStack(null)
+                        .commit();
             }
         });
     }
