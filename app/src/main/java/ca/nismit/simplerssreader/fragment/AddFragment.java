@@ -19,7 +19,7 @@ import ca.nismit.simplerssreader.orma.OrmaDatabase;
 public class AddFragment extends Fragment {
     static final String TAG = AddFragment.class.getSimpleName();
 
-    EditText titleText, urlText;
+    EditText titleText, urlText, categoryText;
     Button addFeedButton;
 
     public AddFragment() {
@@ -51,6 +51,8 @@ public class AddFragment extends Fragment {
 
         urlText = (EditText) getActivity().findViewById(R.id.urlText);
         titleText = (EditText) getActivity().findViewById(R.id.titleText);
+        categoryText = (EditText) getActivity().findViewById(R.id.autoCompleteCatText);
+
         addFeedButton = (Button) getActivity().findViewById(R.id.addFeedButton);
         addFeedButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -68,16 +70,17 @@ public class AddFragment extends Fragment {
     @UiThread
     private void addFeedUrl() {
         Log.d(TAG, "Call addFeedUrl");
+        String title = titleText.getText().toString();
         String url = urlText.getText().toString();
+        String category = categoryText.getText().toString();
         if (url.startsWith("http://") || url.startsWith("https://")) {
             // Insert data to database
-            final FeedUrlStore feedData = new FeedUrlStore(url);
+            final FeedUrlStore feedData = new FeedUrlStore(title, url, category);
             new Thread(new Runnable() {
                 @Override
                 public void run() {
                     feedData.insertData();
-                    //Log.d(TAG,"YEAH");
-                    Log.d(TAG, "run: しましたね");
+                    Log.d(TAG, "Data Inserted");
                 }
             }).start();
 

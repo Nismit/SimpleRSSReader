@@ -27,9 +27,10 @@ public class FeedUrlStore {
     public FeedUrlStore() {
     }
 
-    public FeedUrlStore(String url) {
-        this.title = url;
+    public FeedUrlStore(@NonNull String title, @NonNull String url, @Nullable String category) {
+        this.title = title;
         this.url = url;
+        this.category = category;
     }
 
     private static FeedUrlStore_Relation relation;

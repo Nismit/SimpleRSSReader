@@ -126,23 +126,15 @@ public class MainAdapter extends BaseAdapter {
 
         if(items.get(position).getThumbnail() != null) {
             Picasso.with(context).load(items.get(position).getThumbnail()).into(((ImageView) convertView.findViewById(R.id.imageView)));
+            ((TextView)convertView.findViewById(R.id.cTitle)).setText(trimTitle(position, 25));
+            ((TextView)convertView.findViewById(R.id.summary)).setText(trimSummary(position, 100));
+
         } else {
             ImageView imgView = (ImageView) convertView.findViewById(R.id.imageView);
             imgView.setVisibility(View.GONE);
-        }
-
-        if(items.get(position).getThumbnail() != null) {
-            ((TextView)convertView.findViewById(R.id.cTitle)).setText(trimTitle(position, 25));
-        } else {
             ((TextView)convertView.findViewById(R.id.cTitle)).setText(trimTitle(position, 41));
-        }
-
-        if(items.get(position).getThumbnail() != null) {
-            ((TextView)convertView.findViewById(R.id.summary)).setText(trimSummary(position, 100));
-        } else {
             ((TextView)convertView.findViewById(R.id.summary)).setText(trimSummary(position, 150));
         }
-
 
         ((TextView)convertView.findViewById(R.id.sitePublishDate)).setText(items.get(position).getDate());
 

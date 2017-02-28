@@ -34,7 +34,7 @@
     <AutoCompleteTextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/autoCompleteTextView"
+        android:id="@+id/autoCompleteCatText"
         android:textSize="20sp"
         android:paddingTop="10dp"
         android:layout_marginLeft="10dp"

@@ -27,46 +27,6 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    @Override
-    protected void onStart() {
-        //Log.d(TAG, "onStart");
-        super.onStart();
-    }
-
-    @Override
-    protected void onRestart() {
-        //Log.d(TAG, "onRestart");
-        super.onRestart();
-    }
-
-    @Override
-    protected void onPause() {
-        super.onPause();
-    }
-
-    @Override
-    protected void onStop() {
-        //Log.d(TAG, "onStop");
-        super.onStop();
-    }
-
-    @Override
-    protected void onDestroy() {
-        //Log.d(TAG, "onDestroy");
-        super.onDestroy();
-    }
-
-    @Override
-    protected void onSaveInstanceState(Bundle outState) {
-        super.onSaveInstanceState(outState);
-        //Log.d(TAG, "onSaveInstanceState");
-    }
-
-    @Override
-    protected void onRestoreInstanceState(Bundle savedInstanceState) {
-        super.onRestoreInstanceState(savedInstanceState);
-        //Log.d(TAG, "onRestoreInstanceState");
-    }
 
     void setUpViews() {
         Log.d(TAG, "setUpViews");
@@ -98,7 +58,7 @@ public class MainActivity extends AppCompatActivity {
     @Override
     public void onBackPressed() {
         FragmentManager fm = getSupportFragmentManager();
-        Log.d(TAG, "onBackPressed: Stack " + fm.getBackStackEntryCount());
+        //Log.d(TAG, "onBackPressed: Stack " + fm.getBackStackEntryCount());
         if (fm.getBackStackEntryCount() > 0) {
             fm.popBackStack();
             return;
