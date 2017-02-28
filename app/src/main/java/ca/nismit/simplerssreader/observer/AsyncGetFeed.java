@@ -29,15 +29,20 @@ public class AsyncGetFeed extends Observable {
         // TODO
         // CHECK FEED URL DB
         List<FeedUrlStore> feedList = FeedUrlStore.relationGetAll(relation);
+
         // Set total feed URLs
         numURLs = feedList.size();
 
-        // For loop
-        for (int i = 0; i < numURLs; i++) {
-            String url = feedList.get(i).url;
-            //Log.d(TAG, "URL: "+ url);
-            GetFeedData getFeedData = new GetFeedData();
-            getFeedData.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR, url);
+        if (numURLs == 0) {
+            // There's no data
+            taskFailed();
+        } else {
+            for (int i = 0; i < numURLs; i++) {
+                String url = feedList.get(i).url;
+                //Log.d(TAG, "URL: "+ url);
+                GetFeedData getFeedData = new GetFeedData();
+                getFeedData.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR, url);
+            }
         }
     }
 
@@ -59,8 +64,18 @@ public class AsyncGetFeed extends Observable {
         setChanged();
         notifyObservers(Event.FAILURE);
         // DB ERROR
-        // FETCH ERROR..?
+    }
+
+    public void taskSkipped() {
+        Log.d(TAG, "taskSkipped");
+
+        // Something wrong a feed
+        // it will be skipped to fetch the feed.
         finishedURLs++;
+
+        if(finishedURLs == numURLs) {
+            taskFinish();
+        }
     }
 
     public void taskFinish() {
@@ -97,7 +112,7 @@ public class AsyncGetFeed extends Observable {
 
         @Override
         protected void onCancelled() {
-            taskFailed();
+            taskSkipped();
             super.onCancelled();
         }
     }
