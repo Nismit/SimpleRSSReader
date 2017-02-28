@@ -10,7 +10,7 @@
     <ImageView
         android:layout_width="110dp"
         app:srcCompat="@android:color/darker_gray"
-        android:id="@+id/imageView"
+        android:id="@+id/c_iv"
         android:contentDescription="Thumbnail Image"
         android:layout_height="110dp"
         android:paddingBottom="10dp"
@@ -30,7 +30,7 @@
             android:text="Title Title Title Title Title Title TitleTitle Title Title Title Title Title"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:id="@+id/cTitle"
+            android:id="@+id/c_title"
             android:textStyle="normal|bold"
             android:textSize="15sp"
             tools:text="Title Title Title Title Title Title TitleTitle Title Title Title Title Title"
@@ -39,7 +39,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/summary"
+            android:id="@+id/c_desc"
             android:textSize="14sp"
             android:text="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec..."
             tools:text="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec..."
@@ -53,7 +53,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:id="@+id/siteURL"
+                android:id="@+id/c_url"
                 android:textSize="12sp"
                 tools:text="www.google.com"
                 android:layout_weight="1"
@@ -62,7 +62,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:id="@+id/sitePublishDate"
+                android:id="@+id/c_date"
                 android:layout_weight="1"
                 tools:text="2017/01/26"
                 android:textSize="12sp"

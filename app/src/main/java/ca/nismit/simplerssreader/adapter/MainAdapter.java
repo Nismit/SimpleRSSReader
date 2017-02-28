@@ -134,11 +134,11 @@ public class MainAdapter extends BaseAdapter {
         if (v == null) {
             v = layoutInflater.inflate(R.layout.c_list_view, parent, false);
             vh = new ViewHolder();
-            vh.iv = (ImageView) v.findViewById(R.id.imageView);
-            vh.title = (TextView) v.findViewById(R.id.cTitle);
-            vh.desc = (TextView) v.findViewById(R.id.summary);
-            vh.url = (TextView) v.findViewById(R.id.siteURL);
-            vh.date = (TextView) v.findViewById(R.id.sitePublishDate);
+            vh.iv = (ImageView) v.findViewById(R.id.c_iv);
+            vh.title = (TextView) v.findViewById(R.id.c_title);
+            vh.desc = (TextView) v.findViewById(R.id.c_desc);
+            vh.url = (TextView) v.findViewById(R.id.c_url);
+            vh.date = (TextView) v.findViewById(R.id.c_date);
             v.setTag(vh);
         } else {
             vh = (ViewHolder) v.getTag();
