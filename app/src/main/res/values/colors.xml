@@ -7,4 +7,5 @@
     <color name="loaderColorTwo">#FFC516</color>
     <color name="loaderColorThree">#0FAF6F</color>
     <color name="loaderColorFour">#2828B4</color>
+    <color name="mainColor">#4eadff</color>
 </resources>
