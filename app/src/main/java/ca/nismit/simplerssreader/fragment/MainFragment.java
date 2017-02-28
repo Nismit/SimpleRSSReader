@@ -45,6 +45,9 @@ public class MainFragment extends Fragment {
         initListView();
         initObserver();
         fetchData();
+
+        // Changed title on Action bar
+        //getActivity().setTitle("ALL");
     }
 
     @Nullable
@@ -132,7 +135,6 @@ public class MainFragment extends Fragment {
 
             switch ((AsyncGetFeed.Event)arg) {
                 case START:
-                    //Toast.makeText(getActivity(), "Fetching RSS Feed", Toast.LENGTH_SHORT).show();
                     mainAdapter.clearData();
                     break;
                 case PROGRESS:
@@ -146,7 +148,6 @@ public class MainFragment extends Fragment {
                 case FINISH:
                     // Sort array and display
                     Log.d(TAG, "SUCCESS!");
-                    //Toast.makeText(getActivity(), "Fetched!", Toast.LENGTH_SHORT).show();
                     showResult();
                     break;
             }
