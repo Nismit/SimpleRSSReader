@@ -59,6 +59,7 @@ public class MainFragment extends Fragment {
         mSwipeRefreshLayout = (SwipeRefreshLayout) v.findViewById(R.id.refresh);
         mSwipeRefreshLayout.setOnRefreshListener(mOnRefreshListener);
         mSwipeRefreshLayout.setColorSchemeResources(R.color.loaderColorOne, R.color.loaderColorTwo, R.color.loaderColorThree, R.color.loaderColorFour);
+        mSwipeRefreshLayout.setRefreshing(true);
         return v;
     }
 
@@ -68,6 +69,7 @@ public class MainFragment extends Fragment {
         super.onStart();
         if(isCache) {
             Log.d(TAG, "Got Cached");
+            mSwipeRefreshLayout.setRefreshing(false);
             mListView.setAdapter(mainAdapter);
         }
 
@@ -116,13 +118,14 @@ public class MainFragment extends Fragment {
         if(isRefresh) {
             Log.d(TAG, "notify data changed");
             mainAdapter.notifyDataSetChanged();
-            if(mSwipeRefreshLayout.isRefreshing()) {
-                mSwipeRefreshLayout.setRefreshing(false);
-            }
         } else {
             Log.d(TAG, "First time to setAdapter");
             mListView.setAdapter(mainAdapter);
             isCache = true;
+        }
+
+        if(mSwipeRefreshLayout.isRefreshing()) {
+            mSwipeRefreshLayout.setRefreshing(false);
         }
     }
 
