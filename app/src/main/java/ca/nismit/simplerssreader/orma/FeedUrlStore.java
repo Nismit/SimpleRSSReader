@@ -14,16 +14,7 @@ import java.util.List;
 
 @Table
 public class FeedUrlStore {
-
-//    public static FeedUrlStore create(@NonNull String title, @NonNull String url, @Nullable String category) {
-//        FeedUrlStore feedUrlStore = new FeedUrlStore();
-//        feedUrlStore.title = title;
-//        feedUrlStore.url = url;
-//        feedUrlStore.category = category;
-//        return feedUrlStore;
-//    }
-
-
+    
     public FeedUrlStore() {
     }
 
