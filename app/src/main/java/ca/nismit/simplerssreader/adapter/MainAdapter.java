@@ -33,6 +33,14 @@ public class MainAdapter extends BaseAdapter {
         //Log.d(TAG, "Created main adapter");
     }
 
+    static class ViewHolder {
+        ImageView iv;
+        TextView title;
+        TextView desc;
+        TextView url;
+        TextView date;
+    }
+
     public void setMainAdapater(List<RssItem> items) {
         this.items.addAll(items);
     }
@@ -120,24 +128,38 @@ public class MainAdapter extends BaseAdapter {
     @NonNull
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
-        convertView = layoutInflater.inflate(R.layout.c_list_view, parent, false);
+        View v = convertView;
+        ViewHolder vh = null;
+
+        if (v == null) {
+            v = layoutInflater.inflate(R.layout.c_list_view, parent, false);
+            vh = new ViewHolder();
+            vh.iv = (ImageView) v.findViewById(R.id.imageView);
+            vh.title = (TextView) v.findViewById(R.id.cTitle);
+            vh.desc = (TextView) v.findViewById(R.id.summary);
+            vh.url = (TextView) v.findViewById(R.id.siteURL);
+            vh.date = (TextView) v.findViewById(R.id.sitePublishDate);
+            v.setTag(vh);
+        } else {
+            vh = (ViewHolder) v.getTag();
+        }
 
         items.get(position).setSummary(stipFormat(items.get(position).getSummary()));
 
         if(items.get(position).getThumbnail() != null) {
-            Picasso.with(context).load(items.get(position).getThumbnail()).into(((ImageView) convertView.findViewById(R.id.imageView)));
-            ((TextView)convertView.findViewById(R.id.cTitle)).setText(trimTitle(position, 25));
-            ((TextView)convertView.findViewById(R.id.summary)).setText(trimSummary(position, 100));
+            vh.iv.setVisibility(View.VISIBLE);
+            Picasso.with(context).load(items.get(position).getThumbnail()).into(vh.iv);
+            vh.title.setText(trimTitle(position, 25));
+            vh.desc.setText(trimSummary(position, 100));
 
         } else {
-            ImageView imgView = (ImageView) convertView.findViewById(R.id.imageView);
-            imgView.setVisibility(View.GONE);
-            ((TextView)convertView.findViewById(R.id.cTitle)).setText(trimTitle(position, 41));
-            ((TextView)convertView.findViewById(R.id.summary)).setText(trimSummary(position, 150));
+            vh.iv.setVisibility(View.GONE);
+            vh.title.setText(trimTitle(position, 41));
+            vh.desc.setText(trimSummary(position, 150));
         }
 
-        ((TextView)convertView.findViewById(R.id.sitePublishDate)).setText(items.get(position).getDate());
+        vh.date.setText(items.get(position).getDate());
 
-        return convertView;
+        return v;
     }
 }
