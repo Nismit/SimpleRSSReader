@@ -22,6 +22,10 @@ public class FeedsListFragment extends Fragment {
     public ListView mListView;
     private EditAdapter editAdapter;
     private List<Feed> list;
+    private static final String TABLE_ID = "table_id";
+    private static final String TABLE_TITLE = "table_title";
+    private static final String TABLE_URL = "table_url";
+    private static final String TABLE_CATEGORY = "table_category";
 
     public FeedsListFragment() { }
 
@@ -51,14 +55,13 @@ public class FeedsListFragment extends Fragment {
         mListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                //Toast.makeText(getContext(),"Touched!"+list.get(position).id,Toast.LENGTH_SHORT).show();
                 // TODO
                 // replace new fragment to edit table
                 Bundle bundle = new Bundle();
-                bundle.putLong("dbId", list.get(position).id);
-                bundle.putString("siteTitle", list.get(position).title);
-                bundle.putString("siteURL", list.get(position).url);
-                bundle.putString("category", list.get(position).category);
+                bundle.putLong(TABLE_ID, list.get(position).id);
+                bundle.putString(TABLE_TITLE, list.get(position).title);
+                bundle.putString(TABLE_URL, list.get(position).url);
+                bundle.putString(TABLE_CATEGORY, list.get(position).category);
                 FragmentManager fm = getActivity().getSupportFragmentManager();
                 EditListFragment elf = new EditListFragment();
                 elf.setArguments(bundle);
@@ -75,16 +78,15 @@ public class FeedsListFragment extends Fragment {
         getActivity().setTitle("FEEDS LIST");
     }
 
-    void initListView() {
+    private void initListView() {
         editAdapter = new EditAdapter(
                 getContext(),
                 android.R.layout.simple_list_item_2,
                 android.R.id.text1,
                 list);
-
     }
 
-    void initOrma() {
+    private void initOrma() {
         Feed.initRelaion(getContext());
     }
 }
