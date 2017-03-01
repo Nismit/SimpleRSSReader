@@ -31,14 +31,19 @@ public class AddFragment extends Fragment {
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        Log.d(TAG, "Called onCreate");
     }
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        Log.d(TAG, "Called onCreateView");
-        return inflater.inflate(R.layout.fragment_add_rss, container, false);
+        View v = inflater.inflate(R.layout.fragment_add_rss, container, false);
+
+        urlText = (EditText) v.findViewById(R.id.urlText);
+        titleText = (EditText) v.findViewById(R.id.titleText);
+        categoryText = (EditText) v.findViewById(R.id.autoCompleteCatText);
+        addFeedButton = (Button) v.findViewById(R.id.addFeedButton);
+
+        return v;
     }
 
     @Override
@@ -48,11 +53,6 @@ public class AddFragment extends Fragment {
 
         initOrma();
 
-        urlText = (EditText) getActivity().findViewById(R.id.urlText);
-        titleText = (EditText) getActivity().findViewById(R.id.titleText);
-        categoryText = (EditText) getActivity().findViewById(R.id.autoCompleteCatText);
-
-        addFeedButton = (Button) getActivity().findViewById(R.id.addFeedButton);
         addFeedButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
