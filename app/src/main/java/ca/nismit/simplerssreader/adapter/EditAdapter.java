@@ -21,7 +21,7 @@ public class EditAdapter extends ArrayAdapter<FeedUrlStore> {
     public EditAdapter(Context context, int resource, int textViewResourceId, List<FeedUrlStore> objects) {
         super(context, resource, textViewResourceId, objects);
         list = objects;
-        Log.d(TAG, "EditAdapter: Runs");
+        //Log.d(TAG, "EditAdapter: Runs");
     }
 
     @NonNull
