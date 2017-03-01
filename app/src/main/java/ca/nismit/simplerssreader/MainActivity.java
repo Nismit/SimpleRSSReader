@@ -27,15 +27,6 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-
-    void setUpViews() {
-        Log.d(TAG, "setUpViews");
-        getSupportFragmentManager()
-                .beginTransaction()
-                .add(R.id.activity_main, MainFragment.newInstance())
-                .commit();
-    }
-
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.main, menu);
@@ -65,6 +56,13 @@ public class MainActivity extends AppCompatActivity {
         }
 
         super.onBackPressed();
+    }
+
+    private void setUpViews() {
+        getSupportFragmentManager()
+                .beginTransaction()
+                .add(R.id.activity_main, MainFragment.newInstance())
+                .commit();
     }
 
     private void replaceFragment(Fragment fragment) {
