@@ -45,9 +45,6 @@ public class MainFragment extends Fragment {
         initListView();
         initObserver();
         fetchData();
-
-        // Changed title on Action bar
-        //getActivity().setTitle("ALL");
     }
 
     @Nullable
@@ -79,6 +76,9 @@ public class MainFragment extends Fragment {
                 Log.d(TAG, "onItemClick: "+ mainAdapter.getListItem(position).getLink());
             }
         });
+
+        // Changed title on Action bar
+        getActivity().setTitle("HOME");
     }
 
     private SwipeRefreshLayout.OnRefreshListener mOnRefreshListener = new SwipeRefreshLayout.OnRefreshListener() {

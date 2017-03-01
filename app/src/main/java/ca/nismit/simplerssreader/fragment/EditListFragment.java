@@ -26,7 +26,7 @@ public class EditListFragment extends Fragment {
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        Log.d(TAG, "onCreate: ");
+        //Log.d(TAG, "onCreate: ");
         bundle = getArguments();
     }
 
@@ -50,6 +50,7 @@ public class EditListFragment extends Fragment {
     @Override
     public void onStart() {
         super.onStart();
+        getActivity().setTitle("EDIT FEED");
     }
 
     @Override

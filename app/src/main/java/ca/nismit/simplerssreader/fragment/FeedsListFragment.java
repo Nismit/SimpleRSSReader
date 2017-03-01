@@ -71,6 +71,8 @@ public class FeedsListFragment extends Fragment {
                         .commit();
             }
         });
+
+        getActivity().setTitle("FEEDS LIST");
     }
 
     void initListView() {

@@ -65,6 +65,8 @@ public class AddFragment extends Fragment {
 
             }
         });
+
+        getActivity().setTitle("ADD FEED");
     }
 
     @UiThread
