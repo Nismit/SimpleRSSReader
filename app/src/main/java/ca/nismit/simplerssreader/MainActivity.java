@@ -76,7 +76,7 @@ public class MainActivity extends AppCompatActivity {
         getSupportFragmentManager()
                 .beginTransaction()
                 .setCustomAnimations(
-                        android.R.anim.fade_in, android.R.anim.fade_out,
+                        R.anim.slide_in_down, R.anim.slide_out_down,
                         android.R.anim.fade_in, android.R.anim.fade_out)
                 .replace(R.id.activity_main, fragment)
                 .addToBackStack(null)

@@ -64,6 +64,7 @@ public class FeedsListFragment extends Fragment {
                 elf.setArguments(bundle);
                 fm.beginTransaction()
                         .setCustomAnimations(
+                                R.anim.slide_in_right, android.R.anim.slide_out_right,
                                 R.anim.slide_in_right, android.R.anim.slide_out_right)
                         .replace(R.id.activity_main, elf)
                         .addToBackStack(null)
