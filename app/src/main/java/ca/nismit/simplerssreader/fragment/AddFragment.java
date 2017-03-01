@@ -3,6 +3,7 @@ package ca.nismit.simplerssreader.fragment;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.annotation.UiThread;
+import android.support.annotation.WorkerThread;
 import android.support.v4.app.Fragment;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -74,20 +75,30 @@ public class AddFragment extends Fragment {
         String title = titleText.getText().toString();
         String url = urlText.getText().toString();
         String category = categoryText.getText().toString();
+
         if (url.startsWith("http://") || url.startsWith("https://")) {
             // Insert data to database
-            final Feed feedData = new Feed(title, url, category);
+            final Feed feed = Feed.createFeed();
+            feed.setTitle(title);
+            feed.setUrl(url);
+            feed.setCategory(category);
+
             new Thread(new Runnable() {
                 @Override
                 public void run() {
-                    feedData.insertData();
-                    Log.d(TAG, "Data Inserted");
+                    feed.save();
+
+                    getActivity().runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            Toast.makeText(getActivity().getApplicationContext(), "DATA INSERTED!", Toast.LENGTH_SHORT).show();
+                        }
+
+                    });
                 }
             }).start();
-
-            //Toast.makeText(getActivity(), "INSERT DATA TO DATABASE", Toast.LENGTH_SHORT).show();
         } else {
-            Toast.makeText(getActivity(), "URL ERROR. Please make sure correct url", Toast.LENGTH_SHORT).show();
+            Toast.makeText(getActivity(), "URL ERROR. Please make sure correct full url", Toast.LENGTH_SHORT).show();
         }
 
     }

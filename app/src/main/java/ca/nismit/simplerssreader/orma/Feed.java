@@ -5,6 +5,7 @@ import android.content.Context;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.annotation.WorkerThread;
+import android.util.Log;
 
 import com.github.gfx.android.orma.annotation.Column;
 import com.github.gfx.android.orma.annotation.PrimaryKey;
@@ -14,17 +15,13 @@ import java.util.List;
 
 @Table
 public class Feed {
+    private static final String TAG = Feed.class.getSimpleName();
+    private static Feed_Relation relation;
 
     public Feed() {
     }
 
-    public Feed(@NonNull String title, @NonNull String url, @Nullable String category) {
-        this.title = title;
-        this.url = url;
-        this.category = category;
-    }
-
-    private static Feed_Relation relation;
+    public static Feed createFeed() { return new Feed(); }
 
     public static void initRelaion(Context context) {
         relation = getRelation(context);
@@ -73,11 +70,6 @@ public class Feed {
     }
 
     @WorkerThread
-    public void insertData() {
-        id = getRelation().inserter().execute(this);
-    }
-
-    @WorkerThread
     public static List<Feed> getAll() {
         return getRelation().selector().toList();
     }
@@ -86,18 +78,23 @@ public class Feed {
     public static List<Feed> relationGetAll(Feed_Relation relation) { return relation.selector().toList(); }
 
     @WorkerThread
-    public void updateTable(long id) {
-        getRelation().updater()
-                .idEq(id)
-                .title(title)
-                .url(url)
-                .category(category)
-                .execute();
-
+    public void save() {
+        Log.d(TAG, "save: id " + id + " title " + title);
+        if (id == 0) {
+            id = getRelation().inserter()
+                    .execute(this);
+        } else {
+            getRelation().updater()
+                    .idEq(id)
+                    .title(title)
+                    .url(url)
+                    .category(category)
+                    .execute();
+        }
     }
 
     @WorkerThread
-    public void deleteTable(long id) {
+    public void remove() {
         getRelation().deleter()
                 .idEq(id)
                 .execute();
