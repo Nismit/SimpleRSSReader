@@ -72,4 +72,24 @@ public class FeedUrlStore {
 
     @WorkerThread
     public static List<FeedUrlStore> relationGetAll(FeedUrlStore_Relation relation) { return relation.selector().toList(); }
+
+    @WorkerThread
+    public void updateTable(long id) {
+        getRelation().updater()
+                .idEq(id)
+                .title(title)
+                .url(url)
+                .category(category)
+                .execute();
+
+    }
+
+    @WorkerThread
+    public void deleteTable(long id) {
+        getRelation().deleter()
+                .idEq(id)
+                .execute();
+    }
+
+
 }
