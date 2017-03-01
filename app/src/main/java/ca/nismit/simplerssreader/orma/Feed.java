@@ -57,6 +57,10 @@ public class Feed {
     @NonNull
     public boolean delete = false;
 
+    public void setId(long id) {
+        this.id = id;
+    }
+
     public void setTitle(@NonNull String title) {
         this.title = title;
     }
