@@ -46,10 +46,12 @@ public class MainActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
+    /**
+     * If user pressed back button, it will be shown previous fragment
+     */
     @Override
     public void onBackPressed() {
         FragmentManager fm = getSupportFragmentManager();
-        //Log.d(TAG, "onBackPressed: Stack " + fm.getBackStackEntryCount());
         if (fm.getBackStackEntryCount() > 0) {
             fm.popBackStack();
             return;
@@ -58,6 +60,11 @@ public class MainActivity extends AppCompatActivity {
         super.onBackPressed();
     }
 
+    /**
+     * Making a main fragment which is activity_main
+     *
+     * @return void
+     */
     private void setUpViews() {
         getSupportFragmentManager()
                 .beginTransaction()
@@ -65,6 +72,13 @@ public class MainActivity extends AppCompatActivity {
                 .commit();
     }
 
+    /**
+     * Replace other fragment when the fragment is not same fragment
+     * with animation
+     *
+     * @param fragment
+     * @see res/anim/
+     */
     private void replaceFragment(Fragment fragment) {
         Fragment currentFragment = getSupportFragmentManager().findFragmentById(R.id.activity_main);
         if (currentFragment.getClass() == fragment.getClass()) {
