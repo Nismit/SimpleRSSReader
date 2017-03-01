@@ -295,7 +295,7 @@ public class XmlParser {
     @NonNull
     private String formatDate(long miliTime) {
         Date tempDate = new Date(miliTime);
-        String strDate = new SimpleDateFormat("yyyy/MM/dd").format(tempDate);
+        String strDate = new SimpleDateFormat("yyyy/MM/dd HH:mm").format(tempDate);
         return strDate;
     }
 
