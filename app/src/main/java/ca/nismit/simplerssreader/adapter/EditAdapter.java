@@ -3,7 +3,6 @@ package ca.nismit.simplerssreader.adapter;
 import android.content.Context;
 import android.graphics.Typeface;
 import android.support.annotation.NonNull;
-import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
@@ -11,14 +10,14 @@ import android.widget.TextView;
 
 import java.util.List;
 
-import ca.nismit.simplerssreader.orma.FeedUrlStore;
+import ca.nismit.simplerssreader.orma.Feed;
 
-public class EditAdapter extends ArrayAdapter<FeedUrlStore> {
+public class EditAdapter extends ArrayAdapter<Feed> {
     private static final String TAG = EditAdapter.class.getSimpleName();
 
-    private List<FeedUrlStore> list;
+    private List<Feed> list;
 
-    public EditAdapter(Context context, int resource, int textViewResourceId, List<FeedUrlStore> objects) {
+    public EditAdapter(Context context, int resource, int textViewResourceId, List<Feed> objects) {
         super(context, resource, textViewResourceId, objects);
         list = objects;
         //Log.d(TAG, "EditAdapter: Runs");

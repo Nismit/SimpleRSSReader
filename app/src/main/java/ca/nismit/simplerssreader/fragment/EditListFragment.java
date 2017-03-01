@@ -3,7 +3,6 @@ package ca.nismit.simplerssreader.fragment;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -13,6 +12,7 @@ import android.widget.Button;
 import android.widget.EditText;
 
 import ca.nismit.simplerssreader.R;
+import ca.nismit.simplerssreader.orma.Feed;
 
 public class EditListFragment extends Fragment {
     private static final String TAG = EditListFragment.class.getSimpleName();
@@ -78,6 +78,15 @@ public class EditListFragment extends Fragment {
     }
 
     public void editTable() {
+        String title = mTitle.getText().toString();
+        String url = mURL.getText().toString();
+        String category = mCategory.getText().toString();
+
+        Feed feed = new Feed();
+        feed.setTitle(title);
+        feed.setUrl(url);
+        feed.setCategory(category);
+
 
     }
 

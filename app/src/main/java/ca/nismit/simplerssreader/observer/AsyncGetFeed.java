@@ -6,8 +6,8 @@ import android.util.Log;
 import java.util.List;
 import java.util.Observable;
 
-import ca.nismit.simplerssreader.orma.FeedUrlStore;
-import ca.nismit.simplerssreader.orma.FeedUrlStore_Relation;
+import ca.nismit.simplerssreader.orma.Feed;
+import ca.nismit.simplerssreader.orma.Feed_Relation;
 import ca.nismit.simplerssreader.rss.RssItem;
 import ca.nismit.simplerssreader.rss.RssReader;
 
@@ -19,7 +19,7 @@ public class AsyncGetFeed extends Observable {
     private int numURLs = 0;
     private int finishedURLs = 0;
 
-    public void taskStart(FeedUrlStore_Relation relation) {
+    public void taskStart(Feed_Relation relation) {
         setChanged();
         notifyObservers(Event.START);
         // init Numbers
@@ -28,7 +28,7 @@ public class AsyncGetFeed extends Observable {
 
         // TODO
         // CHECK FEED URL DB
-        List<FeedUrlStore> feedList = FeedUrlStore.relationGetAll(relation);
+        List<Feed> feedList = Feed.relationGetAll(relation);
 
         // Set total feed URLs
         numURLs = feedList.size();
@@ -81,7 +81,6 @@ public class AsyncGetFeed extends Observable {
     public void taskFinish() {
         setChanged();
         notifyObservers(Event.FINISH);
-        // Got data!
     }
 
     public void setItems(List<RssItem> items) {
@@ -95,7 +94,6 @@ public class AsyncGetFeed extends Observable {
     final class GetFeedData extends AsyncTask<String, Void, List<RssItem>> {
         @Override
         protected List<RssItem> doInBackground(String... params) {
-            //Log.d(TAG, "URL: "+ params[0]);
             RssReader reader = new RssReader(params[0]);
             return reader.getItems();
         }

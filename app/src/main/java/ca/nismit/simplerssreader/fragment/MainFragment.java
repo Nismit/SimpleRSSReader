@@ -18,7 +18,7 @@ import java.util.Observer;
 import ca.nismit.simplerssreader.R;
 import ca.nismit.simplerssreader.adapter.MainAdapter;
 import ca.nismit.simplerssreader.observer.AsyncGetFeed;
-import ca.nismit.simplerssreader.orma.FeedUrlStore;
+import ca.nismit.simplerssreader.orma.Feed;
 import ca.nismit.simplerssreader.util.Utils;
 
 public class MainFragment extends Fragment {
@@ -91,6 +91,10 @@ public class MainFragment extends Fragment {
         }
     };
 
+    void initOrma() {
+        Feed.initRelaion(getContext());
+    }
+
     void initListView() {
         mainAdapter = new MainAdapter(getContext());
     }
@@ -100,14 +104,10 @@ public class MainFragment extends Fragment {
         getFeed.addObserver(observer);
     }
 
-    void initOrma() {
-        FeedUrlStore.initRelaion(getContext());
-    }
-
     void fetchData() {
         if (Utils.networkCheck(this.getContext())) {
             // if it is null, get feed urls from database
-            getFeed.taskStart(FeedUrlStore.getRelation());
+            getFeed.taskStart(Feed.getRelation());
         } else {
             Toast.makeText(getActivity(), "Internet is not available", Toast.LENGTH_SHORT).show();
         }

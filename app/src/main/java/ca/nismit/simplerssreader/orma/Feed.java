@@ -13,32 +13,32 @@ import com.github.gfx.android.orma.annotation.Table;
 import java.util.List;
 
 @Table
-public class FeedUrlStore {
+public class Feed {
 
-    public FeedUrlStore() {
+    public Feed() {
     }
 
-    public FeedUrlStore(@NonNull String title, @NonNull String url, @Nullable String category) {
+    public Feed(@NonNull String title, @NonNull String url, @Nullable String category) {
         this.title = title;
         this.url = url;
         this.category = category;
     }
 
-    private static FeedUrlStore_Relation relation;
+    private static Feed_Relation relation;
 
     public static void initRelaion(Context context) {
         relation = getRelation(context);
     }
 
     @Nullable
-    public static FeedUrlStore_Relation getRelation() {
+    public static Feed_Relation getRelation() {
         return relation;
     }
 
     @Nullable
-    static FeedUrlStore_Relation getRelation(Context context) {
+    static Feed_Relation getRelation(Context context) {
         OrmaDatabase orma = OrmaDatabase.builder(context).build();
-        return orma.relationOfFeedUrlStore();
+        return orma.relationOfFeed();
     }
 
     @PrimaryKey(autoincrement = true)
@@ -60,18 +60,30 @@ public class FeedUrlStore {
     @NonNull
     public boolean delete = false;
 
+    public void setTitle(@NonNull String title) {
+        this.title = title;
+    }
+
+    public void setUrl(@NonNull String url) {
+        this.url = url;
+    }
+
+    public void setCategory(@Nullable String category) {
+        this.category = category;
+    }
+
     @WorkerThread
     public void insertData() {
         id = getRelation().inserter().execute(this);
     }
 
     @WorkerThread
-    public static List<FeedUrlStore> getAll() {
+    public static List<Feed> getAll() {
         return getRelation().selector().toList();
     }
 
     @WorkerThread
-    public static List<FeedUrlStore> relationGetAll(FeedUrlStore_Relation relation) { return relation.selector().toList(); }
+    public static List<Feed> relationGetAll(Feed_Relation relation) { return relation.selector().toList(); }
 
     @WorkerThread
     public void updateTable(long id) {

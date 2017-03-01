@@ -13,8 +13,7 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import ca.nismit.simplerssreader.R;
-import ca.nismit.simplerssreader.orma.FeedUrlStore;
-import ca.nismit.simplerssreader.orma.OrmaDatabase;
+import ca.nismit.simplerssreader.orma.Feed;
 
 public class AddFragment extends Fragment {
     static final String TAG = AddFragment.class.getSimpleName();
@@ -77,7 +76,7 @@ public class AddFragment extends Fragment {
         String category = categoryText.getText().toString();
         if (url.startsWith("http://") || url.startsWith("https://")) {
             // Insert data to database
-            final FeedUrlStore feedData = new FeedUrlStore(title, url, category);
+            final Feed feedData = new Feed(title, url, category);
             new Thread(new Runnable() {
                 @Override
                 public void run() {
@@ -94,6 +93,6 @@ public class AddFragment extends Fragment {
     }
 
     void initOrma() {
-        FeedUrlStore.initRelaion(getContext());
+        Feed.initRelaion(getContext());
     }
 }

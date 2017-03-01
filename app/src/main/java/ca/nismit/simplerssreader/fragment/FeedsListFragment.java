@@ -14,14 +14,14 @@ import java.util.List;
 
 import ca.nismit.simplerssreader.R;
 import ca.nismit.simplerssreader.adapter.EditAdapter;
-import ca.nismit.simplerssreader.orma.FeedUrlStore;
+import ca.nismit.simplerssreader.orma.Feed;
 
 public class FeedsListFragment extends Fragment {
     private static final String TAG = FeedsListFragment.class.getSimpleName();
 
     public ListView mListView;
     private EditAdapter editAdapter;
-    private List<FeedUrlStore> list;
+    private List<Feed> list;
 
     public FeedsListFragment() { }
 
@@ -31,7 +31,7 @@ public class FeedsListFragment extends Fragment {
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         initOrma();
-        list = FeedUrlStore.relationGetAll(FeedUrlStore.getRelation());
+        list = Feed.relationGetAll(Feed.getRelation());
         initListView();
     }
 
@@ -85,6 +85,6 @@ public class FeedsListFragment extends Fragment {
     }
 
     void initOrma() {
-        FeedUrlStore.initRelaion(getContext());
+        Feed.initRelaion(getContext());
     }
 }
