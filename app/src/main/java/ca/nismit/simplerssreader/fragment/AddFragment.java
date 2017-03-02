@@ -19,8 +19,8 @@ import ca.nismit.simplerssreader.orma.Feed;
 public class AddFragment extends Fragment {
     static final String TAG = AddFragment.class.getSimpleName();
 
-    EditText titleText, urlText, categoryText;
-    Button addFeedButton;
+    private EditText titleText, urlText, categoryText;
+    private Button addFeedButton;
 
     public AddFragment() {
     }
@@ -52,8 +52,6 @@ public class AddFragment extends Fragment {
         super.onStart();
         Log.d(TAG, "Called onStart");
 
-        initOrma();
-
         addFeedButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -71,7 +69,6 @@ public class AddFragment extends Fragment {
 
     @UiThread
     private void addFeedUrl() {
-        Log.d(TAG, "Call addFeedUrl");
         String title = titleText.getText().toString();
         String url = urlText.getText().toString();
         String category = categoryText.getText().toString();
@@ -101,9 +98,5 @@ public class AddFragment extends Fragment {
             Toast.makeText(getActivity(), "URL ERROR. Please make sure correct full url", Toast.LENGTH_SHORT).show();
         }
 
-    }
-
-    void initOrma() {
-        Feed.initRelaion(getContext());
     }
 }
