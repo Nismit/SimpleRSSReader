@@ -3,7 +3,21 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@android:color/background_light">
+    android:background="@color/mainColor">
+
+    <TextView
+        android:text="FEED TITLE"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/textView"
+        android:layout_marginLeft="15dp"
+        android:textColor="@android:color/background_light"
+        android:textSize="12sp"
+        android:typeface="sans"
+        android:textStyle="normal|bold"
+        android:fontFamily="sans-serif"
+        android:layout_marginRight="15dp"
+        android:layout_marginTop="10dp" />
 
     <EditText
         android:layout_width="match_parent"
@@ -12,11 +26,24 @@
         android:id="@+id/titleText"
         android:hint="@string/hint_edit_text_title"
         android:textSize="20sp"
-        android:paddingTop="10dp"
         android:layout_marginLeft="10dp"
         android:layout_marginRight="10dp"
-        android:layout_marginTop="10dp"
-        android:inputType="text" />
+        android:inputType="text"
+        android:textColor="@color/inputCustomColor" />
+
+    <TextView
+        android:text="FEED URL"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/textView2"
+        android:layout_marginLeft="15dp"
+        android:layout_marginRight="15dp"
+        android:textSize="12sp"
+        android:textStyle="normal|bold"
+        android:textColor="@android:color/background_light"
+        android:fontFamily="sans-serif"
+        android:typeface="sans"
+        android:layout_marginTop="10dp" />
 
     <EditText
         android:layout_width="match_parent"
@@ -27,9 +54,22 @@
         android:hint="@string/hint_edit_text_url"
         style="@android:style/Widget.EditText"
         android:textSize="20sp"
-        android:paddingTop="10dp"
         android:layout_marginLeft="10dp"
         android:layout_marginRight="10dp"
+        android:textColor="@color/inputCustomColor" />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/textView3"
+        android:text="FEED CATEGORY"
+        android:fontFamily="sans-serif"
+        android:typeface="sans"
+        android:textSize="12sp"
+        android:textStyle="normal|bold"
+        android:textColor="@android:color/background_light"
+        android:layout_marginLeft="15dp"
+        android:layout_marginRight="15dp"
         android:layout_marginTop="10dp" />
 
     <AutoCompleteTextView
@@ -37,11 +77,10 @@
         android:layout_height="wrap_content"
         android:id="@+id/autoCompleteCatText"
         android:textSize="20sp"
-        android:paddingTop="10dp"
         android:layout_marginLeft="10dp"
         android:layout_marginRight="10dp"
-        android:layout_marginTop="10dp"
-        android:hint="Category" />
+        android:hint="Category"
+        android:textColor="@color/inputCustomColor" />
 
     <Button
         android:text="ADD FEED"
@@ -51,6 +90,12 @@
         android:textSize="18sp"
         android:layout_marginTop="10dp"
         android:layout_marginLeft="10dp"
-        android:layout_marginRight="10dp" />
+        android:layout_marginRight="10dp"
+        style="@style/Widget.AppCompat.Button.Borderless"
+        android:textColor="@android:color/background_light"
+        android:textStyle="normal|bold"
+        android:fontFamily="sans-serif-medium"
+        android:typeface="sans"
+        android:background="@drawable/positive_button" />
 
 </LinearLayout>
