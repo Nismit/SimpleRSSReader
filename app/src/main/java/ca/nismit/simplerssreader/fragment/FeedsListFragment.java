@@ -34,9 +34,6 @@ public class FeedsListFragment extends Fragment {
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        initOrma();
-        list = Feed.relationGetAll(Feed.getRelation());
-        initListView();
     }
 
     @Nullable
@@ -50,6 +47,9 @@ public class FeedsListFragment extends Fragment {
     @Override
     public void onStart() {
         super.onStart();
+
+        list = Feed.relationGetAll(Feed.getRelation());
+        initListView();
         mListView.setAdapter(editAdapter);
 
         mListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -84,9 +84,5 @@ public class FeedsListFragment extends Fragment {
                 android.R.layout.simple_list_item_2,
                 android.R.id.text1,
                 list);
-    }
-
-    private void initOrma() {
-        Feed.initRelaion(getContext());
     }
 }

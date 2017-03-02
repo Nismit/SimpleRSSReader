@@ -10,6 +10,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import ca.nismit.simplerssreader.R;
 import ca.nismit.simplerssreader.orma.Feed;
@@ -17,9 +18,10 @@ import ca.nismit.simplerssreader.orma.Feed;
 public class EditListFragment extends Fragment {
     private static final String TAG = EditListFragment.class.getSimpleName();
 
-    EditText mTitle, mURL, mCategory;
-    Button editButton, deleteButton;
-    Bundle bundle;
+    private long id;
+    private EditText mTitle, mURL, mCategory;
+    private Button mEditButton, mDeleteButton;
+    private Bundle bundle;
 
     public EditListFragment() {
 
@@ -42,26 +44,28 @@ public class EditListFragment extends Fragment {
         mURL = (EditText) v.findViewById(R.id.editUrlText);
         mCategory = (EditText) v.findViewById(R.id.editCategoryText);
 
-        editButton = (Button) v.findViewById(R.id.editButton);
-        deleteButton = (Button) v.findViewById(R.id.deleteButton);
+        mEditButton = (Button) v.findViewById(R.id.editButton);
+        mDeleteButton = (Button) v.findViewById(R.id.deleteButton);
 
-        editButton.setOnClickListener(new View.OnClickListener() {
+        mEditButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 editTable();
             }
         });
 
-        deleteButton.setOnClickListener(new View.OnClickListener() {
+        mDeleteButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 deleteTable();
             }
         });
 
-        mTitle.setText(bundle.getString("siteTitle"));
-        mURL.setText(bundle.getString("siteURL"));
-        mCategory.setText(bundle.getString("category"));
+        mTitle.setText(bundle.getString("table_title"));
+        mURL.setText(bundle.getString("table_url"));
+        mCategory.setText(bundle.getString("table_category"));
+
+        id = bundle.getLong("table_id");
 
         return v;
     }
@@ -82,15 +86,46 @@ public class EditListFragment extends Fragment {
         String url = mURL.getText().toString();
         String category = mCategory.getText().toString();
 
-        Feed feed = new Feed();
+        final Feed feed = new Feed();
+        feed.setId(id);
         feed.setTitle(title);
         feed.setUrl(url);
         feed.setCategory(category);
 
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                feed.save();
+
+                getActivity().runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        Toast.makeText(getActivity().getApplicationContext(), "DATA UPDATED!", Toast.LENGTH_SHORT).show();
+                    }
+
+                });
+            }
+        }).start();
 
     }
 
     public void deleteTable() {
+        final Feed feed = new Feed();
+        feed.setId(id);
 
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                feed.remove();
+
+                getActivity().runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        Toast.makeText(getActivity().getApplicationContext(), "DATA DELETED!", Toast.LENGTH_SHORT).show();
+                    }
+
+                });
+            }
+        }).start();
     }
 }
