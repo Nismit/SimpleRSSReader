@@ -1,5 +1,6 @@
 <resources>
     <string name="app_name">Simple RSS Reader</string>
-    <string name="hint_edit_text_title">Site Title</string>
-    <string name="hint_edit_text_url">http(s)://</string>
+    <string name="hint_edit_text_title">SITE TITLE</string>
+    <string name="hint_edit_text_url">HTTP://</string>
+    <string name="hint_edit_text_category">CATEGORY</string>
 </resources>

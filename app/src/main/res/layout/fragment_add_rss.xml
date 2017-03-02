@@ -29,7 +29,10 @@
         android:layout_marginLeft="10dp"
         android:layout_marginRight="10dp"
         android:inputType="text"
-        android:textColor="@color/inputCustomColor" />
+        android:textColor="@android:color/background_light"
+        android:textColorHint="@color/inputCustomColor"
+        android:textStyle="normal|bold"
+        style="@style/EditTextStyle" />
 
     <TextView
         android:text="FEED URL"
@@ -56,7 +59,9 @@
         android:textSize="20sp"
         android:layout_marginLeft="10dp"
         android:layout_marginRight="10dp"
-        android:textColor="@color/inputCustomColor" />
+        android:textColor="@android:color/background_light"
+        android:textColorHint="@color/inputCustomColor"
+        android:textStyle="normal|bold" />
 
     <TextView
         android:layout_width="match_parent"
@@ -79,8 +84,10 @@
         android:textSize="20sp"
         android:layout_marginLeft="10dp"
         android:layout_marginRight="10dp"
-        android:hint="Category"
-        android:textColor="@color/inputCustomColor" />
+        android:hint="@string/hint_edit_text_category"
+        android:textColor="@android:color/background_light"
+        android:textColorHint="@color/inputCustomColor"
+        android:textStyle="normal|bold" />
 
     <Button
         android:text="ADD FEED"

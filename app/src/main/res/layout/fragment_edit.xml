@@ -2,16 +2,49 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:padding="10dp"
-    android:background="@android:color/background_light">
+    android:background="@color/mainColor">
+
+    <TextView
+        android:text="FEED TITLE"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/textView4"
+        android:typeface="sans"
+        android:fontFamily="sans-serif"
+        android:textSize="12sp"
+        android:textStyle="normal|bold"
+        android:textColor="@android:color/background_light"
+        android:layout_marginRight="15dp"
+        android:layout_marginLeft="15dp"
+        android:layout_marginTop="10dp" />
 
     <EditText
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:inputType="text"
         android:ems="10"
         android:id="@+id/editTitleText"
-        android:hint="@string/hint_edit_text_title" />
+        android:hint="@string/hint_edit_text_title"
+        android:textSize="20sp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:inputType="text"
+        android:textColor="@android:color/background_light"
+        android:textColorHint="@color/inputCustomColor"
+        android:textStyle="normal|bold" />
+
+    <TextView
+        android:text="FEED URL"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/textView5"
+        android:fontFamily="sans-serif"
+        android:typeface="sans"
+        android:textSize="12sp"
+        android:textColor="@android:color/background_light"
+        android:textStyle="normal|bold"
+        android:layout_marginLeft="15dp"
+        android:layout_marginRight="15dp"
+        android:layout_marginTop="10dp" />
 
     <EditText
         android:layout_width="match_parent"
@@ -19,20 +52,47 @@
         android:inputType="textUri"
         android:ems="10"
         android:id="@+id/editUrlText"
-        android:hint="@string/hint_edit_text_url" />
+        android:hint="@string/hint_edit_text_url"
+        style="@android:style/Widget.EditText"
+        android:textSize="20sp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:textColor="@android:color/background_light"
+        android:textColorHint="@color/inputCustomColor"
+        android:textStyle="normal|bold" />
 
-    <EditText
+    <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:inputType="text"
-        android:ems="10"
+        android:id="@+id/textView6"
+        android:layout_marginLeft="15dp"
+        android:layout_marginRight="15dp"
+        android:layout_marginTop="10dp"
+        android:text="FEED CATEGORY"
+        android:fontFamily="sans-serif"
+        android:typeface="sans"
+        android:textSize="12sp"
+        android:textStyle="normal|bold"
+        android:textColor="@android:color/background_light" />
+
+    <AutoCompleteTextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
         android:id="@+id/editCategoryText"
-        android:hint="Category" />
+        android:textSize="20sp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:hint="@string/hint_edit_text_category"
+        android:textColor="@android:color/background_light"
+        android:textColorHint="@color/inputCustomColor"
+        android:textStyle="normal|bold" />
 
     <LinearLayout
         android:orientation="horizontal"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp">
 
         <Button
             android:text="DELETE"
@@ -49,9 +109,12 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/editButton"
-            android:layout_weight="1"
+            android:textSize="18sp"
             style="@style/Widget.AppCompat.Button.Borderless"
-            android:textSize="16sp"
-            android:textColor="@color/colorAccent" />
+            android:textColor="@android:color/background_light"
+            android:textStyle="normal|bold"
+            android:fontFamily="sans-serif-medium"
+            android:typeface="sans"
+            android:background="@drawable/positive_button" />
     </LinearLayout>
 </LinearLayout>
