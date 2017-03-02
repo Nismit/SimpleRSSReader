@@ -2,7 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/mainColor">
+    android:background="@color/colorPrimary">
 
     <TextView
         android:text="FEED TITLE"
@@ -16,7 +16,7 @@
         android:textColor="@android:color/background_light"
         android:layout_marginRight="15dp"
         android:layout_marginLeft="15dp"
-        android:layout_marginTop="10dp" />
+        android:layout_marginTop="12dp" />
 
     <EditText
         android:layout_width="match_parent"
@@ -79,7 +79,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/editCategoryText"
-        android:textSize="20sp"
+        android:textSize="18sp"
         android:layout_marginLeft="10dp"
         android:layout_marginRight="10dp"
         android:hint="@string/hint_edit_text_category"
@@ -99,10 +99,15 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/deleteButton"
-            android:layout_weight="1"
             style="@style/Widget.AppCompat.Button.Borderless"
-            android:textSize="16sp"
-            android:textColor="@android:color/holo_red_dark" />
+            android:textSize="18sp"
+            android:textColor="@android:color/background_light"
+            android:background="@drawable/negative_button"
+            android:layout_weight="1"
+            android:textStyle="normal|bold"
+            android:fontFamily="sans-serif"
+            android:typeface="sans"
+            android:layout_marginRight="10dp" />
 
         <Button
             android:text="EDIT"
@@ -115,6 +120,8 @@
             android:textStyle="normal|bold"
             android:fontFamily="sans-serif-medium"
             android:typeface="sans"
-            android:background="@drawable/positive_button" />
+            android:background="@drawable/positive_button"
+            android:layout_weight="1"
+            android:layout_marginLeft="10dp" />
     </LinearLayout>
 </LinearLayout>

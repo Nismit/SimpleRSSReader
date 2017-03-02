@@ -3,7 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/mainColor">
+    android:background="@color/colorPrimary">
 
     <TextView
         android:text="FEED TITLE"
@@ -17,7 +17,7 @@
         android:textStyle="normal|bold"
         android:fontFamily="sans-serif"
         android:layout_marginRight="15dp"
-        android:layout_marginTop="10dp" />
+        android:layout_marginTop="12dp" />
 
     <EditText
         android:layout_width="match_parent"
