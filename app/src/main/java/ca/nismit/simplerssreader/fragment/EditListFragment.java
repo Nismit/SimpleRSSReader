@@ -1,5 +1,6 @@
 package ca.nismit.simplerssreader.fragment;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -8,6 +9,7 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
@@ -86,29 +88,39 @@ public class EditListFragment extends Fragment {
         String url = mURL.getText().toString();
         String category = mCategory.getText().toString();
 
-        final Feed feed = new Feed();
-        feed.setId(id);
-        feed.setTitle(title);
-        feed.setUrl(url);
-        feed.setCategory(category);
+        InputMethodManager inputMethodManage = (InputMethodManager) getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
+        inputMethodManage.hideSoftInputFromWindow(getView().getWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS);
 
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
-                feed.save();
+        if (url.startsWith("http://") || url.startsWith("https://")) {
+            final Feed feed = new Feed();
+            feed.setId(id);
+            feed.setTitle(title);
+            feed.setUrl(url);
+            feed.setCategory(category);
 
-                getActivity().runOnUiThread(new Runnable() {
-                    @Override
-                    public void run() {
-                        Toast.makeText(getActivity().getApplicationContext(), "DATA UPDATED!", Toast.LENGTH_SHORT).show();
-                    }
+            new Thread(new Runnable() {
+                @Override
+                public void run() {
+                    feed.save();
 
-                });
-            }
-        }).start();
+                    getActivity().runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            Toast.makeText(getActivity().getApplicationContext(), "DATA UPDATED!", Toast.LENGTH_SHORT).show();
+                            getFragmentManager().popBackStack();
+                        }
+
+                    });
+                }
+            }).start();
+        } else {
+            Toast.makeText(getActivity(), "URL ERROR. Please make sure correct full url", Toast.LENGTH_SHORT).show();
+        }
 
     }
 
+    // TODO
+    // Show dialog to check delete or not
     public void deleteTable() {
         final Feed feed = new Feed();
         feed.setId(id);
@@ -122,6 +134,7 @@ public class EditListFragment extends Fragment {
                     @Override
                     public void run() {
                         Toast.makeText(getActivity().getApplicationContext(), "DATA DELETED!", Toast.LENGTH_SHORT).show();
+                        getFragmentManager().popBackStack();
                     }
 
                 });
