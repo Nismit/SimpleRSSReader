@@ -28,14 +28,6 @@ public class MainActivity extends AppCompatActivity {
             initOrma();
             setUpViews();
         }
-
-        if (AppLaunchChecker.hasStartedFromLauncher(this)) {
-            Log.d(TAG, "Second time to launch app");
-        } else {
-            Log.d(TAG, "First time to launch app");
-        }
-
-        AppLaunchChecker.onActivityCreate(this);
     }
 
     @Override
