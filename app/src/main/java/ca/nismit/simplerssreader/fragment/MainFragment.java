@@ -57,6 +57,7 @@ public class MainFragment extends Fragment {
         mSwipeRefreshLayout.setOnRefreshListener(mOnRefreshListener);
         mSwipeRefreshLayout.setColorSchemeResources(R.color.loaderColorOne, R.color.loaderColorTwo, R.color.loaderColorThree, R.color.loaderColorFour);
         mSwipeRefreshLayout.setRefreshing(true);
+        tableCheck();
         return v;
     }
 
@@ -65,14 +66,10 @@ public class MainFragment extends Fragment {
         Log.d(TAG, "onStart");
         super.onStart();
 
-        tableCheck();
-
         if(isCache) {
             Log.d(TAG, "Got Cached");
             mSwipeRefreshLayout.setRefreshing(false);
             mListView.setAdapter(mainAdapter);
-        } else {
-            fetchData();
         }
 
         mListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -84,6 +81,18 @@ public class MainFragment extends Fragment {
 
         // Changed title on Action bar
         getActivity().setTitle("HOME");
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        Log.d(TAG, "onResume: ");
+    }
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        Log.d(TAG, "onDestroyView: ");
     }
 
     private SwipeRefreshLayout.OnRefreshListener mOnRefreshListener = new SwipeRefreshLayout.OnRefreshListener() {
@@ -125,6 +134,8 @@ public class MainFragment extends Fragment {
                                     .replace(R.id.activity_main, AddFragment.newInstance())
                                     .addToBackStack(null)
                                     .commit();
+                        } else {
+                            fetchData();
                         }
                     }
                 });
