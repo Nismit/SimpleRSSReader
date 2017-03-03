@@ -45,7 +45,6 @@ public class MainFragment extends Fragment {
 
         initListView();
         initObserver();
-        tableCheck();
     }
 
     @Nullable
@@ -65,6 +64,9 @@ public class MainFragment extends Fragment {
     public void onStart() {
         Log.d(TAG, "onStart");
         super.onStart();
+
+        tableCheck();
+
         if(isCache) {
             Log.d(TAG, "Got Cached");
             mSwipeRefreshLayout.setRefreshing(false);
@@ -114,7 +116,7 @@ public class MainFragment extends Fragment {
                     @Override
                     public void run() {
                         if (count == 0) {
-                            Toast.makeText(getActivity().getApplicationContext(), "THERE'S NO DATA, ADD YOUR FAVORITE FEED!", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(getActivity().getApplicationContext(), "THERE'S NO DATA \nADD YOUR FAVORITE FEED!", Toast.LENGTH_SHORT).show();
                             FragmentManager fm = getActivity().getSupportFragmentManager();
                             fm.beginTransaction()
                                     .setCustomAnimations(
