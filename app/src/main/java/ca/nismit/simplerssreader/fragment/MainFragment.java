@@ -114,7 +114,7 @@ public class MainFragment extends Fragment {
                     @Override
                     public void run() {
                         if (count == 0) {
-                            Toast.makeText(getActivity().getApplicationContext(), "THERE'S NO DATA", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(getActivity().getApplicationContext(), "THERE'S NO DATA, ADD YOUR FAVORITE FEED!", Toast.LENGTH_SHORT).show();
                             FragmentManager fm = getActivity().getSupportFragmentManager();
                             fm.beginTransaction()
                                     .setCustomAnimations(
