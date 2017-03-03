@@ -1,5 +1,6 @@
 package ca.nismit.simplerssreader.fragment;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.annotation.UiThread;
@@ -9,6 +10,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
@@ -73,6 +75,9 @@ public class AddFragment extends Fragment {
         String url = urlText.getText().toString();
         String category = categoryText.getText().toString();
 
+        InputMethodManager inputMethodManage = (InputMethodManager) getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
+        inputMethodManage.hideSoftInputFromWindow(getView().getWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS);
+
         if (url.startsWith("http://") || url.startsWith("https://")) {
             // Insert data to database
             final Feed feed = Feed.createFeed();
@@ -89,6 +94,7 @@ public class AddFragment extends Fragment {
                         @Override
                         public void run() {
                             Toast.makeText(getActivity().getApplicationContext(), "DATA INSERTED!", Toast.LENGTH_SHORT).show();
+                            getFragmentManager().popBackStack();
                         }
 
                     });
