@@ -20,3 +20,11 @@ Features:
 Future Plan:
 It will be using database and will be saved your feed urls.
 If you touch the listview, it will be shown web view or send service to browser.
+
+# Development Environment
+
+Android Studio 2.3
+
+# Support Android Version
+
+Android 4.0.3+
