@@ -3,6 +3,7 @@ package ca.nismit.simplerssreader.fragment;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -44,7 +45,7 @@ public class MainFragment extends Fragment {
         initOrma();
         initListView();
         initObserver();
-        fetchData();
+        tableCheck();
     }
 
     @Nullable
@@ -68,7 +69,10 @@ public class MainFragment extends Fragment {
             Log.d(TAG, "Got Cached");
             mSwipeRefreshLayout.setRefreshing(false);
             mListView.setAdapter(mainAdapter);
+        } else {
+            fetchData();
         }
+
 
         mListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -102,6 +106,33 @@ public class MainFragment extends Fragment {
     void initObserver() {
         getFeed = new AsyncGetFeed();
         getFeed.addObserver(observer);
+    }
+
+    private void tableCheck() {
+        Log.d(TAG, "tableCheck: ");
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                final int count = Feed.relationGetAll(Feed.getRelation()).size();
+
+                getActivity().runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        if (count == 0) {
+                            Toast.makeText(getActivity().getApplicationContext(), "THERE'S NO DATA", Toast.LENGTH_SHORT).show();
+                            FragmentManager fm = getActivity().getSupportFragmentManager();
+                            fm.beginTransaction()
+                                    .setCustomAnimations(
+                                            R.anim.slide_in_down, R.anim.slide_out_down,
+                                            android.R.anim.fade_in, android.R.anim.fade_out)
+                                    .replace(R.id.activity_main, AddFragment.newInstance())
+                                    .addToBackStack(null)
+                                    .commit();
+                        }
+                    }
+                });
+            }
+        }).start();
     }
 
     void fetchData() {
