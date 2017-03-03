@@ -1,5 +1,6 @@
 package ca.nismit.simplerssreader;
 
+import android.support.v4.app.AppLaunchChecker;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AppCompatActivity;
@@ -12,6 +13,7 @@ import android.view.View;
 import ca.nismit.simplerssreader.fragment.AddFragment;
 import ca.nismit.simplerssreader.fragment.FeedsListFragment;
 import ca.nismit.simplerssreader.fragment.MainFragment;
+import ca.nismit.simplerssreader.orma.Feed;
 
 public class MainActivity extends AppCompatActivity {
     static final String TAG = MainActivity.class.getSimpleName();
@@ -23,8 +25,17 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         if (savedInstanceState == null) {
+            initOrma();
             setUpViews();
         }
+
+        if (AppLaunchChecker.hasStartedFromLauncher(this)) {
+            Log.d(TAG, "Second time to launch app");
+        } else {
+            Log.d(TAG, "First time to launch app");
+        }
+
+        AppLaunchChecker.onActivityCreate(this);
     }
 
     @Override
@@ -58,6 +69,13 @@ public class MainActivity extends AppCompatActivity {
         }
 
         super.onBackPressed();
+    }
+
+    /**
+     * Migration and initial Database
+     */
+    private void initOrma() {
+        Feed.initRelaion(this);
     }
 
     /**

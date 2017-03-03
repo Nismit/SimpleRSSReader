@@ -10,6 +10,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
+import android.widget.Button;
 import android.widget.ListView;
 import android.widget.Toast;
 
@@ -42,7 +43,6 @@ public class MainFragment extends Fragment {
         super.onCreate(savedInstanceState);
         Log.d(TAG, "onCreate");
 
-        initOrma();
         initListView();
         initObserver();
         tableCheck();
@@ -73,7 +73,6 @@ public class MainFragment extends Fragment {
             fetchData();
         }
 
-
         mListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
@@ -94,10 +93,6 @@ public class MainFragment extends Fragment {
             fetchData();
         }
     };
-
-    void initOrma() {
-        Feed.initRelaion(getContext());
-    }
 
     void initListView() {
         mainAdapter = new MainAdapter(getContext());
